@@ -32,6 +32,7 @@ public class Game : MonoBehaviour
 
     string _current_cue;
     float _ROUND_TIME;
+    float _REACTIVE_DELAY = 1f;
     float _timer;
     int[] _actor_ids = new int[2];
 
@@ -80,6 +81,11 @@ public class Game : MonoBehaviour
 
     public void Check()
     {
+        // Prevent double click error
+        if (_ROUND_TIME - _timer < _REACTIVE_DELAY)
+        {
+            return;
+        }
         _previous.text = _current_cue + "\n" + _previous.text;
         NextPlayer();
     }
