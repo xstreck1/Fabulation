@@ -8,6 +8,11 @@ public class Manager : MonoBehaviour {
     public GameObject _game;
     public GameObject _score;
 
+    void Start()
+    {
+        Screen.sleepTimeout = SleepTimeout.NeverSleep;
+    }
+
     public void activateMenu()
     {
         _game.SetActive(false);
