@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 349973ca65996d9428e981f8e3775569
-timeCreated: 1431781162
+guid: 98a6c539fafb8594f94b581a5aa4315b
+timeCreated: 1431791954
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: big_frame_start_0
+    21300000: empty_frame_0
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -50,7 +50,7 @@ TextureImporter:
   buildTargetSettings: []
   spriteSheet:
     sprites:
-    - name: big_frame_start_0
+    - name: empty_frame_0
       rect:
         serializedVersion: 2
         x: 0

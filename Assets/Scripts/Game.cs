@@ -66,17 +66,22 @@ public class Game : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        _timer -= Time.deltaTime;
-        if (_timer < 0)
+        float new_time = _timer - Time.deltaTime;
+
+        if (_timer > 0)
         {
-            Handheld.Vibrate();
-            _check.SetActive(false);
-            _cross.SetActive(false);
-            _arrow.SetActive(true);
-        } else
-        {
-            _meters[0].localScale = _meters[1].localScale = new Vector3((_ROUND_TIME - _timer) / _ROUND_TIME, 1, 1);
+            // Display arrow
+            if (new_time <= 0)
+            {
+                Handheld.Vibrate();
+                _check.SetActive(false);
+                _cross.SetActive(false);
+                _arrow.SetActive(true);
+            }
+            _meters[0].localScale = _meters[1].localScale = new Vector3((_ROUND_TIME - new_time) / _ROUND_TIME, 1, 1);
         }
+
+        _timer = new_time;
     }
 
     public void Check()
