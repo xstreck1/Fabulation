@@ -54,6 +54,7 @@ public class Game : MonoBehaviour
     void Start()
     {
         StaticData.ResetScore();
+        Debug.Log(StaticData.lists.Count);
         NewPlayer(0, 1);
     }
 
@@ -126,7 +127,7 @@ public class Game : MonoBehaviour
         _actor_ids[0] = judge;
         _actor_ids[1] = player;
         _timer = StaticData.seconds;
-        _current_cue = WordList.words[Random.Range(0, WordList.words.Count())];
+        _current_cue = WordLists.SelectWord(WordLists.SelectList(StaticData.lists)); // Get the random word
         foreach (int i in Enumerable.Range(0, 2))
         {
             _backgrounds[i].color = colors[_actor_ids[i]];
