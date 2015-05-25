@@ -11,17 +11,21 @@ public class Score : MonoBehaviour {
         _score_text = transform.FindChild("ScoreText").GetComponent<Text>();
     }
 	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+	void Start () {
+        SetScore();
+    }
 
-    public void setScore(List<int> players_points)
+    public void SetScore()
     {
         _score_text.text = "";
-        for (int player_no = 0; player_no < players_points.Count; player_no++)
+        for (int player_no = 0; player_no < StaticData.players; player_no++)
         {
-            _score_text.text += "Player " + (player_no+1).ToString() + ": " + players_points[player_no].ToString() + "\n";
+            _score_text.text += "Player " + (player_no+1).ToString() + ": " + StaticData.score[player_no].ToString() + "\n";
         }
+    }
+
+    public void FinishGame()
+    {
+        Application.LoadLevel("Menu");
     }
 }

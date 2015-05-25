@@ -5,7 +5,7 @@ using System.Linq;
 using UnityEngine.UI;
 
 public class Game : MonoBehaviour
-{ 
+{
     public static readonly Color[] colors = {
         new Color(1,0,0),
         new Color(0,1,0),
@@ -19,26 +19,21 @@ public class Game : MonoBehaviour
         new Color(0.5f,0.5f,0.5f)
     };
 
-    Manager _manager;
     GameObject _check, _cross, _arrow;
     Text _previous;
     Transform[] _actors = new Transform[2]; // First judge, than player
     Image[] _backgrounds = new Image[2];
-    Text[]  _cues = new Text[2];
+    Text[] _cues = new Text[2];
     Text[] _player_names = new Text[2];
     Transform[] _meters = new Transform[2];
 
-    List<int> _players_points;
-
     string _current_cue;
-    float _ROUND_TIME;
-    float _REACTIVE_DELAY = 1f;
+    float _REACTIVE_DELAY = 1f; // In seconds, how long are the buttons blocked to prevent double-click.
     float _timer;
-    int[] _actor_ids = new int[2];
+    int[] _actor_ids = new int[2]; // Current acting players
 
     void Awake()
     {
-        _manager = GameObject.Find("Manager").GetComponent<Manager>();
         _actors[0] = transform.FindChild("Judge");
         _actors[1] = transform.FindChild("Player");
         _check = _actors[0].FindChild("Content").FindChild("Check").gameObject;
@@ -58,12 +53,10 @@ public class Game : MonoBehaviour
 
     void Start()
     {
-#if UNITY_EDITOR
-        StartGame(2, 2, 5);
-#endif
+        StaticData.ResetScore();
+        NewPlayer(0, 1);
     }
 
-    // Update is called once per frame
     void Update()
     {
         float new_time = _timer - Time.deltaTime;
@@ -78,7 +71,8 @@ public class Game : MonoBehaviour
                 _cross.SetActive(false);
                 _arrow.SetActive(true);
             }
-            _meters[0].localScale = _meters[1].localScale = new Vector3((_ROUND_TIME - new_time) / _ROUND_TIME, 1, 1);
+            // Change the meter
+            _meters[0].localScale = _meters[1].localScale = new Vector3((StaticData.seconds - new_time) / StaticData.seconds, 1, 1);
         }
 
         _timer = new_time;
@@ -87,20 +81,31 @@ public class Game : MonoBehaviour
     public void Check()
     {
         // Prevent double click error
-        if (_ROUND_TIME - _timer < _REACTIVE_DELAY)
+        if (StaticData.seconds - _timer < _REACTIVE_DELAY)
         {
             return;
         }
-        _previous.text = _current_cue + "\n" + _previous.text;
-        NextPlayer();
+        else
+        {
+            StaticData.score[_actor_ids[1]] += 1;
+            _previous.text = _current_cue + "\n" + _previous.text;
+            if (StaticData.score[_actor_ids[1]] == StaticData.points)
+            {
+                Application.LoadLevel("Score");
+            }
+            else
+            {
+                NextPlayer();
+            }
+        }
     }
 
     public void Cross()
     {
-        _players_points[_actor_ids[1]] -= 1;
-        if (_players_points[_actor_ids[1]] == 0)
+        // Prevent double click error
+        if (StaticData.seconds - _timer < _REACTIVE_DELAY)
         {
-            _manager.EndGame(_players_points);
+            return;
         }
         else
         {
@@ -110,25 +115,17 @@ public class Game : MonoBehaviour
 
     public void Arrow()
     {
-        _players_points[_actor_ids[1]] -= 1;
-        if (_players_points[_actor_ids[1]] == 0)
-        {
-            _manager.EndGame(_players_points);
-        }
-        else
-        {
-            _check.SetActive(true);
-            _cross.SetActive(true);
-            _arrow.SetActive(false);
-            NextPlayer();
-        }
+        _check.SetActive(true);
+        _cross.SetActive(true);
+        _arrow.SetActive(false);
+        NextPlayer();
     }
 
     void NewPlayer(int judge, int player)
     {
         _actor_ids[0] = judge;
         _actor_ids[1] = player;
-        _timer = _ROUND_TIME;
+        _timer = StaticData.seconds;
         _current_cue = WordList.words[Random.Range(0, WordList.words.Count())];
         foreach (int i in Enumerable.Range(0, 2))
         {
@@ -138,14 +135,8 @@ public class Game : MonoBehaviour
         }
     }
 
-    public void StartGame(int players, int points, int seconds)
-    {
-        _players_points = Enumerable.Repeat(points, players).ToList();
-        _ROUND_TIME = seconds;
-        NewPlayer(0,1);
-    }
     public void NextPlayer()
     {
-        NewPlayer((_actor_ids[0] + 1) % _players_points.Count(), (_actor_ids[1] + 1) % _players_points.Count());
+        NewPlayer((_actor_ids[0] + 1) % StaticData.players, (_actor_ids[1] + 1) % StaticData.players);
     }
 }
