@@ -14,6 +14,7 @@ public class MenuSlider : MonoBehaviour {
         _label_text = transform.FindChild("Label").GetComponent<Text>();
         _init_text = _label_text.text;
         _slider = GetComponent<Slider>();
+        _slider.value = PlayerPrefs.GetFloat(_slider.name, _slider.value);
         UpdateLabel();
     }
 	
@@ -42,5 +43,6 @@ public class MenuSlider : MonoBehaviour {
         {
             throw new System.Exception("Trying to update an unknown label " + this.name);
         }
+        PlayerPrefs.SetFloat(_slider.name, _slider.value);
     }
 }

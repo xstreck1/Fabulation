@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine.UI;
 using System.Linq;
+using System;
 
 public class MenuToggle : MonoBehaviour {
     Toggle _toggle;
@@ -10,6 +11,7 @@ public class MenuToggle : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         _toggle = GetComponent<Toggle>();
+        _toggle.isOn = Convert.ToBoolean(PlayerPrefs.GetInt(_toggle.name, Convert.ToInt32(_toggle.isOn)));
         SetDictionary();
     }
 	
@@ -29,5 +31,6 @@ public class MenuToggle : MonoBehaviour {
                 StaticData.lists.Add(name);
             }
         }
+        PlayerPrefs.SetInt(_toggle.name, Convert.ToInt32(_toggle.isOn));
     }
 }

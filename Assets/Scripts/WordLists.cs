@@ -7,7 +7,7 @@ using System;
 public static class WordLists
 {
     public static Dictionary<string, string[]> dictionary = new Dictionary<string, string[]>();
-    public static string[] lists = new string[] { "basic" };
+    public static string[] lists = new string[] { "adventure", "basic", "crimi", "drama", "fantasy", "fairytale", "horror", "sci-fi", "western" };
     private static readonly string _LISTS_FOLDER = "WordLists";
 
     static WordLists()
