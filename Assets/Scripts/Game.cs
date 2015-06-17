@@ -27,12 +27,13 @@ public class Game : MonoBehaviour
     Text[] _cues = new Text[2];
     Text[] _player_names = new Text[2];
     Transform[] _meters = new Transform[2];
+    Transform _panel;
 
     string _current_cue;
     readonly int _PHASE_COUNT = 3;
     readonly float _REACTIVE_DELAY = 1f; // In seconds, how long are the buttons blocked to prevent double-click.
-    readonly float _JUDGE_TIME = 5f; // In seconds, how long the judge can decide.
-    readonly float _PREPARE_TIME = 5f; // In seconds, how long the player can prepare
+    readonly float _JUDGE_TIME = 10f; // In seconds, how long the judge can decide.
+    readonly float _PREPARE_TIME = 0.05f; // In seconds, how long the player can prepare
     double[] _timers = new double[2];
     double[] _time = new double[2];
     int[] _actor_ids = new int[2]; // Current acting players
@@ -40,8 +41,9 @@ public class Game : MonoBehaviour
 
     void Awake()
     {
-        _actors[0] = transform.FindChild("Judge");
-        _actors[1] = transform.FindChild("Player");
+        _panel = transform.FindChild("Panel");
+        _actors[0] = _panel.FindChild("Judge");
+        _actors[1] = _panel.FindChild("Player");
         _check = _actors[0].FindChild("Content").FindChild("Check").gameObject;
         _cross = _actors[0].FindChild("Content").FindChild("Cross").gameObject;
         _arrow = _actors[1].FindChild("Content").FindChild("Arrow").gameObject;
@@ -84,6 +86,7 @@ public class Game : MonoBehaviour
                 }
                 _timers[0] = _time[0] = double.PositiveInfinity;
                 _timers[1] = _time[1] = _PREPARE_TIME;
+                _panel.Rotate(0f, 0f, 180f);
                 break;
             case 1:
                 foreach (int i in Enumerable.Range(0, 2))
@@ -144,16 +147,23 @@ public class Game : MonoBehaviour
 
     public void Check()
     {
-        StaticData.score[_actor_ids[1]] += 1;
         foreach (int i in Enumerable.Range(0, 2))
         {
             _previous_text[i].text = _current_cue + "\n" + _previous_text[i].text;
         }
-        if (StaticData.score[_actor_ids[1]] == StaticData.points)
+            _phase = 0;
+            NextPlayer();
+            NewPhase();
+    }
+
+    public void Cross()
+    {
+        StaticData.score[_actor_ids[1]] -= 1;
+
+        if (StaticData.score[_actor_ids[1]] == 0)
         {
             Application.LoadLevel("Score");
-        }
-        else
+        } else
         {
             _phase = 0;
             NextPlayer();
@@ -161,16 +171,12 @@ public class Game : MonoBehaviour
         }
     }
 
-    public void Cross()
-    {
-        _phase = 0;
-        NextPlayer();
-        NewPhase();
-    }
-
     public void Arrow()
     {
-        nextPhase();
+        if ((_timers[1] < (_time[1] - _REACTIVE_DELAY)) || _phase != 1)
+        {
+            nextPhase();
+        }
     }
 
     void NewPlayer(int judge, int player)

@@ -21,6 +21,6 @@ public static class StaticData
 
     static public void ResetScore()
     {
-        score = Enumerable.Repeat(0, players).ToList();
+        score = Enumerable.Repeat(points, players).ToList();
     }
 }
