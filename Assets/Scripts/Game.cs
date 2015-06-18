@@ -68,7 +68,7 @@ public class Game : MonoBehaviour
             float fill = (StaticData.seconds - _timer) / StaticData.seconds;
             _timeMeter.transform.localScale = new Vector3(fill, 1f, 1f);
         }
-        else if (old_timer >= 0 && _timer < 0)
+        else if (old_timer > 0 && _timer <= 0)
         {
             Next();
         }
@@ -80,6 +80,7 @@ public class Game : MonoBehaviour
 
     void Next()
     {
+        _timer = 0; // Reset the timer
         _narrator = !_narrator;
         Text role_text = _role.GetComponent<Text>();
         if (_narrator)
