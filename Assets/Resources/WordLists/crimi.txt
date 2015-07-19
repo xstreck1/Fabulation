@@ -23,3 +23,5 @@ String
 Witness
 Weapon
 Victim
+shooting
+stabbing

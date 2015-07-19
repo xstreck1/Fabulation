@@ -10,6 +10,7 @@ Cart
 Cow
 Cowboy
 Courtesan
+Explosion
 Fort
 Gunpowder
 Gold
@@ -35,3 +36,5 @@ Tumbleweed
 Whiskey
 Wood
 Wheel
+#verbs
+#adjectives

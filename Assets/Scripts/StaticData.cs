@@ -4,6 +4,8 @@ using System.Linq;
 
 public static class StaticData
 {
+    public enum  GameMode { LastManStanding, SuddenDeath};
+    static public GameMode game_mode;
     static public int players;
     static public int points;
     static public int seconds;
@@ -12,6 +14,7 @@ public static class StaticData
 
     static StaticData()
     {
+        game_mode = GameMode.LastManStanding;
         players = 2;
         points = 2;
         seconds = 30;

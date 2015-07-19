@@ -1,3 +1,4 @@
+#nouns
 Atmosphere
 Atom
 Biology
@@ -25,8 +26,14 @@ Robot
 Space
 Spaceship
 Station
+Stasis
 Star
 Technology
 Theory
 Time
 Universe
+#verbs
+experimenting
+researching
+#adjectives
+
