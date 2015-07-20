@@ -9,7 +9,7 @@ public class MenuButton : MonoBehaviour {
     // Read from the player prefs whether the dictionary has been chosen
     void Start()
     {
-        _button_text = transform.FindChild("Label").GetComponent<Text>();
+        _button_text = transform.FindChild("Text").GetComponent<Text>();
         _button_text.text = PlayerPrefs.GetString(this.name, _button_text.text);
         SetValue();
     }
