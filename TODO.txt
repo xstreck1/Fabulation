@@ -1,1 +1,1 @@
-Remove words used in a single game.
+If there are no more nouns, the selector will loop forever.

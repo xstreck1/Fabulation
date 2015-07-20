@@ -25,7 +25,7 @@ public class Game : MonoBehaviour
     public GameObject _icon;
     public GameObject _role;
     public GameObject _name;
-    public GameObject _newWord;
+    // public GameObject _newWord;
     public GameObject _oldWord;
     public GameObject _usedWords;
     public GameObject _check;
@@ -56,7 +56,7 @@ public class Game : MonoBehaviour
         _role.GetComponent<Text>().text = "narrator";
         _timer = StaticData.seconds;
         _oldWord.GetComponent<Text>().text = "Let me tell a story about";
-        _newWord.GetComponent<Text>().text = getNewWord();
+        // _newWord.GetComponent<Text>().text = getNewWord();
     }
 
     void Update()
@@ -88,7 +88,7 @@ public class Game : MonoBehaviour
             role_text.text = "narrator";
             _timer = StaticData.seconds;
             _oldWord.GetComponent<Text>().text = getOldWord();
-            _newWord.GetComponent<Text>().text = getNewWord();
+            // _newWord.GetComponent<Text>().text = getNewWord();
         }
         else
         {
@@ -116,6 +116,7 @@ public class Game : MonoBehaviour
         _name.GetComponent<Text>().text = "Player " + (_player_i + 1);
     }
 
+    // Get a word that is not yet between the used ones
     string getNewWord()
     {
         string new_word = "";
@@ -125,9 +126,15 @@ public class Game : MonoBehaviour
         return new_word;
     }
 
+    // Get an old word that is a noun (has a capital first letter)
     string getOldWord()
     {
-        return _used_words[UnityEngine.Random.Range(0, _used_words.Count)];
+        string old_word = "";
+        do
+        {
+            old_word = _used_words[UnityEngine.Random.Range(0, _used_words.Count)];
+        } while (char.IsLower(old_word[0]));
+        return old_word;
     }
 
     public void Check()
@@ -138,7 +145,7 @@ public class Game : MonoBehaviour
         }
         else
         {
-            _used_words.Add(_newWord.GetComponent<Text>().text);
+            // _used_words.Add(_newWord.GetComponent<Text>().text);
             PopulateUsedWords();
             Next();
         }
@@ -151,7 +158,7 @@ public class Game : MonoBehaviour
             _timer -= StaticData.seconds * _REROLL_TIME;
             if (_timer > 0)
             {
-                _newWord.GetComponent<Text>().text = getNewWord();
+                // _newWord.GetComponent<Text>().text = getNewWord();
             }
             else
             {
@@ -179,6 +186,6 @@ public class Game : MonoBehaviour
         {
             _used_list += word + "\n";
         }
-        _usedWords.GetComponent<Text>().text = _used_list;
+        // _usedWords.GetComponent<Text>().text = _used_list;
     }
 }
