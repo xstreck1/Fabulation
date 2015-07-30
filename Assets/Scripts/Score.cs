@@ -6,13 +6,18 @@ using UnityEngine.UI;
 public class Score : MonoBehaviour {
     Text _score_text;
 
-	// Use this for initialization
-	void Awake () {
+    public void Start ()
+    {
         _score_text = transform.FindChild("ScoreText").GetComponent<Text>();
-    }
-	
-	void Start () {
         SetScore();
+    }
+
+    public void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.LoadLevel("Menu");
+        }
     }
 
     public void SetScore()

@@ -1,16 +1,18 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Menu : MonoBehaviour {
+public class Menu : MonoBehaviour
+{
     public void StartGame()
     {
-        if (StaticData.lists.Count > 0)
+        Application.LoadLevel("Genres");
+    }
+
+    public void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-            Application.LoadLevel("Game");
-        }
-        else
-        {
-            Debug.LogError("No word list selected.");
+            ExitGame();
         }
     }
 

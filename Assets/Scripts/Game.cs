@@ -36,6 +36,7 @@ public class Game : MonoBehaviour
     // readonly float _JUDGE_TIME = 10f; // In seconds, how long the judge can decide.
     readonly float _REROLL_TIME = 1f/3f; // what fraction of time is lost on re-roll
 
+    Words _words;
     List<string> _used_words = new List<string>{};
     bool _narrator = true;
     float _timer = 0;
@@ -75,6 +76,10 @@ public class Game : MonoBehaviour
         else
         {
             _timeMeter.transform.localScale = Vector3.one;
+        }
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.LoadLevel("Menu");
         }
     }
 
@@ -121,7 +126,7 @@ public class Game : MonoBehaviour
     {
         string new_word = "";
         do {
-            new_word = WordLists.SelectWord(WordLists.SelectList(StaticData.lists));
+            // new_word = WordLists.SelectWord(WordLists.SelectList(StaticData.lists));
         } while (_used_words.Contains(new_word));
         return new_word;
     }
