@@ -13,4 +13,9 @@ public class Menu : MonoBehaviour {
             Debug.LogError("No word list selected.");
         }
     }
+
+    public void ExitGame()
+    {
+        Application.Quit();
+    }
 }

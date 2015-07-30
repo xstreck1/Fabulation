@@ -13,8 +13,8 @@ public class MenuSlider : MonoBehaviour {
         _text = this.GetComponent<Text>();
         _label_text = transform.FindChild("Label").GetComponent<Text>();
         _init_text = _label_text.text;
-        _slider = GetComponent<Slider>();
-        _slider.value = PlayerPrefs.GetFloat(_slider.name, _slider.value);
+        _slider = transform.FindChild("Slider").GetComponent<Slider>();
+        _slider.value = PlayerPrefs.GetFloat(this.name, _slider.value);
         UpdateLabel();
     }
 	
@@ -35,7 +35,11 @@ public class MenuSlider : MonoBehaviour {
         {
             StaticData.points = (int)value;
         }
-        else if (this.name == "SecondsCount")
+        else if (this.name == "LivesCount")
+        {
+            StaticData.lives = (int)value;
+        }
+        else if (this.name == "TimeCount")
         {
             StaticData.seconds = (int)value;
         }
@@ -43,6 +47,6 @@ public class MenuSlider : MonoBehaviour {
         {
             throw new System.Exception("Trying to update an unknown label " + this.name);
         }
-        PlayerPrefs.SetFloat(_slider.name, _slider.value);
+        PlayerPrefs.SetFloat(this.name, _slider.value);
     }
 }
