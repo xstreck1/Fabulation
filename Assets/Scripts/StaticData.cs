@@ -6,6 +6,7 @@ public struct GameMode
 {
     public string name;
     public bool using_lives;
+    public bool skipping_players;
 }
 
 
@@ -28,9 +29,9 @@ public static class StaticData
     {
         mode_list = new List<GameMode>()
         {
-            new GameMode { name = "Last Man Standing",  using_lives = true},
-            new GameMode { name = "Collaboration",  using_lives = false},
-            new GameMode { name = "Sudden death",  using_lives = true},
+            new GameMode { name = "Last Man Standing", using_lives = true, skipping_players = true},
+            new GameMode { name = "Collaboration", using_lives = false, skipping_players = false},
+            new GameMode { name = "Sudden death", using_lives = true, skipping_players = false},
         };
         string[] used_genres = { "adventure", "basic", "crimi", "drama", "fantasy", "fairytale", "horror", "sci-fi", "western" };
         // Load the dictionaries
@@ -45,6 +46,13 @@ public static class StaticData
 
     static public void ResetScore()
     {
-        score = Enumerable.Repeat(points, players).ToList();
+        if (mode_list[current_mode_ID].using_lives)
+        {
+            score = Enumerable.Repeat(lives, players).ToList();
+        }
+        else
+        {
+            score = Enumerable.Repeat(0, players).ToList();
+        }
     }
 }

@@ -87,6 +87,10 @@ public class Game : MonoBehaviour
 
     void Next()
     {
+        if (IsGameFinished())
+        {
+            Application.LoadLevel("Score");
+        }
         _timer = 0; // Reset the timer
         _narrator = !_narrator;
         Text role_text = _role.GetComponent<Text>();
@@ -109,7 +113,10 @@ public class Game : MonoBehaviour
     void IncrementPlayer()
     {
         _last_player_i = _player_i;
-        _player_i = (_player_i + 1) % StaticData.players;
+        do
+        {
+            _player_i = (_player_i + 1) % StaticData.players;
+        } while (StaticData.mode_list[StaticData.current_mode_ID].using_lives && StaticData.score[_player_i] == 0);
         SetIconColor();
         SetPlayerName();
     }
@@ -124,6 +131,27 @@ public class Game : MonoBehaviour
         _name.GetComponent<Text>().text = "Player " + (_player_i + 1);
     }
 
+    bool IsGameFinished()
+    {
+        GameMode mode = StaticData.mode_list[StaticData.current_mode_ID];
+        if (mode.using_lives)
+        {
+            if (mode.skipping_players)
+            {
+                return StaticData.score.Where(x => x != 0).Count() <= 1; // At most one player left
+            }
+            else
+            {
+                return StaticData.score.Where(x => x != 0).Count() < StaticData.players; // At least one player dead
+            }
+        } 
+        else
+        {
+            return StaticData.score.Sum() >= StaticData.points; // Points counted
+        }
+    }
+
+
     public void Check()
     {
         if (_narrator)
@@ -133,6 +161,10 @@ public class Game : MonoBehaviour
         else
         {
             _words.Finished(_newWord.GetComponent<Text>().text, true);
+            if (!StaticData.mode_list[StaticData.current_mode_ID].using_lives)
+            {
+                StaticData.score[_last_player_i] += 1;
+            }
             PopulateUsedWords();
             Next();
         }
@@ -155,22 +187,18 @@ public class Game : MonoBehaviour
         else
         {
             _words.Finished(_newWord.GetComponent<Text>().text, false);
-            StaticData.score[_last_player_i] -= 1;
-            if (StaticData.score[_last_player_i] == 0)
+            if (StaticData.mode_list[StaticData.current_mode_ID].using_lives)
             {
-                Application.LoadLevel("Score");
+                StaticData.score[_last_player_i] -= 1;
             }
-            else
-            {
-                Next();
-            }
+            Next();
         }
     }
 
     void PopulateUsedWords()
     {
         string[] words_array = _words.GetUsed().ToArray();
-        words_array[System.Array.IndexOf(words_array, _current_old)] = "<size=50><color=black>" + _current_old + "</color></size>";
+        words_array[System.Array.IndexOf(words_array, _current_old)] = "<size=50><color=white>" + _current_old + "</color></size>";
         _usedWords.GetComponent<Text>().text = string.Join("\n", words_array);
     }
 }
