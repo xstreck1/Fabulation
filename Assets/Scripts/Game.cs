@@ -4,8 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine.UI;
 
-// TODO: If runs out of words, loops forever
-
 public class Game : MonoBehaviour
 {
     public static readonly Color[] colors = {
@@ -25,8 +23,8 @@ public class Game : MonoBehaviour
     public GameObject _icon;
     public GameObject _role;
     public GameObject _name;
-    // public GameObject _newWord;
-    public GameObject _oldWord;
+    public GameObject _newWord;
+    // public GameObject _oldWord;
     public GameObject _usedWords;
     public GameObject _check;
     public GameObject _cross;
@@ -36,8 +34,8 @@ public class Game : MonoBehaviour
     // readonly float _JUDGE_TIME = 10f; // In seconds, how long the judge can decide.
     readonly float _REROLL_TIME = 1f/3f; // what fraction of time is lost on re-roll
 
-    Words _words;
-    List<string> _used_words = new List<string>{};
+    Words _words = new Words();
+    string _current_old = "";
     bool _narrator = true;
     float _timer = 0;
     int _last_player_i = 0;
@@ -53,11 +51,15 @@ public class Game : MonoBehaviour
 
         SetIconColor();
         SetPlayerName();
-        PopulateUsedWords();
         _role.GetComponent<Text>().text = "narrator";
         _timer = StaticData.seconds;
-        _oldWord.GetComponent<Text>().text = "Let me tell a story about";
-        // _newWord.GetComponent<Text>().text = getNewWord();
+
+        // Simulate accepting a word
+        _current_old = _words.GetWord(true, true);
+        _words.Finished(_current_old, true);
+        PopulateUsedWords();
+
+        _newWord.GetComponent<Text>().text = _words.GetWord(true, false);
     }
 
     void Update()
@@ -92,8 +94,9 @@ public class Game : MonoBehaviour
         {
             role_text.text = "narrator";
             _timer = StaticData.seconds;
-            _oldWord.GetComponent<Text>().text = getOldWord();
-            // _newWord.GetComponent<Text>().text = getNewWord();
+            _current_old = _words.GetWord(false, true);
+            _newWord.GetComponent<Text>().text = _words.GetWord(true, false);
+            PopulateUsedWords();
         }
         else
         {
@@ -121,27 +124,6 @@ public class Game : MonoBehaviour
         _name.GetComponent<Text>().text = "Player " + (_player_i + 1);
     }
 
-    // Get a word that is not yet between the used ones
-    string getNewWord()
-    {
-        string new_word = "";
-        do {
-            // new_word = WordLists.SelectWord(WordLists.SelectList(StaticData.lists));
-        } while (_used_words.Contains(new_word));
-        return new_word;
-    }
-
-    // Get an old word that is a noun (has a capital first letter)
-    string getOldWord()
-    {
-        string old_word = "";
-        do
-        {
-            old_word = _used_words[UnityEngine.Random.Range(0, _used_words.Count)];
-        } while (char.IsLower(old_word[0]));
-        return old_word;
-    }
-
     public void Check()
     {
         if (_narrator)
@@ -150,7 +132,7 @@ public class Game : MonoBehaviour
         }
         else
         {
-            // _used_words.Add(_newWord.GetComponent<Text>().text);
+            _words.Finished(_newWord.GetComponent<Text>().text, true);
             PopulateUsedWords();
             Next();
         }
@@ -163,7 +145,7 @@ public class Game : MonoBehaviour
             _timer -= StaticData.seconds * _REROLL_TIME;
             if (_timer > 0)
             {
-                // _newWord.GetComponent<Text>().text = getNewWord();
+                _newWord.GetComponent<Text>().text = _words.GetWord(true, false);
             }
             else
             {
@@ -172,6 +154,7 @@ public class Game : MonoBehaviour
         }
         else
         {
+            _words.Finished(_newWord.GetComponent<Text>().text, false);
             StaticData.score[_last_player_i] -= 1;
             if (StaticData.score[_last_player_i] == 0)
             {
@@ -186,11 +169,8 @@ public class Game : MonoBehaviour
 
     void PopulateUsedWords()
     {
-        string _used_list = "";
-        foreach (string word in _used_words)
-        {
-            _used_list += word + "\n";
-        }
-        // _usedWords.GetComponent<Text>().text = _used_list;
+        string[] words_array = _words.GetUsed().ToArray();
+        words_array[System.Array.IndexOf(words_array, _current_old)] = "<size=50><color=black>" + _current_old + "</color></size>";
+        _usedWords.GetComponent<Text>().text = string.Join("\n", words_array);
     }
 }

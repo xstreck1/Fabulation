@@ -773,7 +773,7 @@ MonoBehaviour:
   _icon: {fileID: 1633439933}
   _role: {fileID: 1946394830}
   _name: {fileID: 1025639080}
-  _oldWord: {fileID: 639021537}
+  _newWord: {fileID: 1839283414}
   _usedWords: {fileID: 1288135282}
   _check: {fileID: 1356064416}
   _cross: {fileID: 2063331805}
@@ -1127,7 +1127,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: "Bandit\r\nBartender\r\nBison\r\nBottle\r\nBull\r\n<color=black><size=50>Bullet\r</size></color>\nDeputy\r\nCactus\r\nCart\r\nCow\r\nCowboy\r\nCourtesan\r\nExplosion\r\nFort\r\nGunpowder\r\nGold\r\nGlass\r\nHideout\r\nHorse\r\nMustang\r\nMoney\r\nMine\r\nNoon\r\nRanch"
+  m_Text: used list
 --- !u!222 &1288135285
 CanvasRenderer:
   m_ObjectHideFlags: 0

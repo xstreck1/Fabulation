@@ -33,11 +33,12 @@ public static class StaticData
             new GameMode { name = "Sudden death",  using_lives = true},
         };
         string[] used_genres = { "adventure", "basic", "crimi", "drama", "fantasy", "fairytale", "horror", "sci-fi", "western" };
+        // Load the dictionaries
         foreach (string genre_name in used_genres) {
             used_lists.Add(genre_name, false);
             TextAsset text_asset = Resources.Load(_LISTS_FOLDER + "/" + genre_name) as TextAsset;
             word_lists[genre_name] = text_asset.text.Split(new string[] { "\r\n", "\n" }, System.StringSplitOptions.None).ToList<string>();
-            word_lists[genre_name].RemoveAll(x => x.Length > 0 && x[0] == '#'); // Remove all the lines that start with #
+            word_lists[genre_name].RemoveAll(x => x.Length == 0 || x[0] == '#'); // Remove all the lines that start with #
         }
         ResetScore();
     }
