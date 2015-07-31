@@ -8,7 +8,7 @@ public class Words {
 
     public Words()
     {
-        foreach (var word_list in StaticData.word_lists.Where(x => StaticData.used_lists[x.Key] = true))
+        foreach (var word_list in StaticData.word_lists.Where(x => StaticData.used_lists[x.Key] == true))
         {
             _unused.InsertRange(0, word_list.Value);
         }

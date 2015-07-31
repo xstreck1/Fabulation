@@ -8,7 +8,7 @@ public class Score : MonoBehaviour {
 
     public void Start ()
     {
-        _score_text = transform.FindChild("ScoreText").GetComponent<Text>();
+        _score_text = transform.FindChild("Score").FindChild("ScoreText").GetComponent<Text>();
         SetScore();
     }
 

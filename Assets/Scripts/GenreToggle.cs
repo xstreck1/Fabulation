@@ -7,11 +7,11 @@ using System;
 public class GenreToggle : MonoBehaviour {
     Toggle _toggle;
 
-
 	// Read from the player prefs whether the dictionary has been chosen
 	void Start () {
         _toggle = GetComponent<Toggle>();
-        SetDictionary(Convert.ToBoolean(PlayerPrefs.GetInt(_toggle.name, Convert.ToInt32(_toggle.isOn))));
+        _toggle.isOn = Convert.ToBoolean(PlayerPrefs.GetInt(_toggle.name, Convert.ToInt32(_toggle.isOn)));
+        SetDictionary(_toggle.isOn);
         _toggle.onValueChanged.AddListener(SetDictionary);
     }
 	

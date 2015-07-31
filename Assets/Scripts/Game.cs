@@ -34,7 +34,7 @@ public class Game : MonoBehaviour
     // readonly float _JUDGE_TIME = 10f; // In seconds, how long the judge can decide.
     readonly float _REROLL_TIME = 1f/3f; // what fraction of time is lost on re-roll
 
-    Words _words = new Words();
+    Words _words;
     string _current_old = "";
     bool _narrator = true;
     float _timer = 0;
@@ -48,6 +48,7 @@ public class Game : MonoBehaviour
     void Start()
     {
         StaticData.ResetScore();
+        _words = new Words();
 
         SetIconColor();
         SetPlayerName();

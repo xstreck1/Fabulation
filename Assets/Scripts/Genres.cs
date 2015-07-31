@@ -20,7 +20,7 @@ public class Genres : MonoBehaviour {
     {
         if (StaticData.used_lists.Count(x => x.Value == true) > 0)
         {
-            Application.LoadLevel("Genres");
+            Application.LoadLevel("Game");
         }
         else
         {
