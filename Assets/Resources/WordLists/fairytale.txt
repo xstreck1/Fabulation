@@ -1,4 +1,3 @@
-Ball
 Brew
 Brother
 Castle
@@ -33,3 +32,10 @@ Queen
 Unicorn
 Witch
 Wish
+#verbs
+to battle
+to curse
+to dance
+to kiss
+to rescue
+to marry

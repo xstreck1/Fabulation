@@ -26,6 +26,7 @@ public class Game : MonoBehaviour
     public GameObject _newWord;
     // public GameObject _oldWord;
     public GameObject _usedWords;
+    public GameObject _textPad;
     public GameObject _check;
     public GameObject _cross;
     public GameObject _timeMeter;
@@ -198,8 +199,12 @@ public class Game : MonoBehaviour
 
     void PopulateUsedWords()
     {
+        // Debug.Log("X: " + _textPad.GetComponent<ScrollRect>().normalizedPosition.x + " Y: " + _textPad.GetComponent<ScrollRect>().normalizedPosition.y);
         string[] words_array = _words.GetUsed().ToArray();
-        words_array[System.Array.IndexOf(words_array, _current_old)] = "<size=50><color=white>" + _current_old + "</color></size>";
+        int _old_word_i = System.Array.IndexOf(words_array, _current_old);
+        float scroll_pos = 1 - (((float)_old_word_i) / words_array.Count());
+        _textPad.GetComponent<ScrollRect>().normalizedPosition = new Vector2(0f, scroll_pos);
+        words_array[_old_word_i] = "<size=50><color=white>+ " + _current_old + "</color></size>";
         _usedWords.GetComponent<Text>().text = string.Join("\n", words_array);
     }
 }

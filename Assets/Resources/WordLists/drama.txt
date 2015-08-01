@@ -2,17 +2,13 @@ Accident
 Alcohol
 Attorney
 Baby
-Breakup
-Burning
 Cell
 Cigarette
 Criminal
 Court
-Choking
 Death
 Depression
 Divorce
-Drowning
 Funeral
 Hunger
 Illness
@@ -20,13 +16,21 @@ Infection
 Law
 Protection
 Prison
-Shout
 Judge
 Weapon
 Violence
-Survivor
 Soldier
 Whisper
 Widow
 Thirst
 Trap
+#verbs
+to break
+to burn
+to drink
+to drown
+to hurt
+to kill
+to shout
+to stalk
+to survive

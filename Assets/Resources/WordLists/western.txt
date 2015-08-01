@@ -1,9 +1,11 @@
+Arrow
 Bandit
 Bartender
 Bison
 Bottle
 Bull
 Bullet
+Bow
 Deputy
 Cactus
 Cart
@@ -37,4 +39,13 @@ Whiskey
 Wood
 Wheel
 #verbs
+to blow up
+to chase
+to drink
+to hunt
+to mine
+to play
+to run
+to skin
+to shoot
 #adjectives

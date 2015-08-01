@@ -3,13 +3,11 @@ Clue
 Chalk
 Detective
 Diamond
-Explosives
 Footprint
 Fingerprint
 Gun
 Handcuffs
 Pearl
-Poison
 Police
 Knife
 Jail
@@ -23,5 +21,19 @@ String
 Witness
 Weapon
 Victim
-shooting
-stabbing
+#verbs
+to choke
+to die
+to discover
+to hide
+to examine
+to explode
+to follow
+to forge
+to investigate
+to murder
+to poison
+to scream
+to shoot
+to stab
+to steal

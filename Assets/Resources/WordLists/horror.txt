@@ -33,3 +33,11 @@ Zombie
 Werewolf
 Worm
 Tunnel
+#verbs
+to catch
+to fear
+to mutilate
+to scream
+to scare
+to tear
+#adjectives

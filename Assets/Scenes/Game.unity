@@ -242,7 +242,7 @@ RectTransform:
   m_RootOrder: 2
   m_AnchorMin: {x: .5, y: 1}
   m_AnchorMax: {x: .5, y: 1}
-  m_AnchoredPosition: {x: 60, y: -70}
+  m_AnchoredPosition: {x: 60, y: -60}
   m_SizeDelta: {x: 420, y: 60}
   m_Pivot: {x: .5, y: 1}
 --- !u!114 &265126139
@@ -302,10 +302,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1319064168}
   m_RootOrder: 0
-  m_AnchorMin: {x: 0, y: .5}
-  m_AnchorMax: {x: 0, y: .5}
+  m_AnchorMin: {x: -1, y: .5}
+  m_AnchorMax: {x: 1, y: .5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1080, y: 80}
+  m_SizeDelta: {x: 0, y: 80}
   m_Pivot: {x: .5, y: .5}
 --- !u!114 &619432101
 MonoBehaviour:
@@ -434,8 +434,8 @@ RectTransform:
   m_RootOrder: 3
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 1.52587891e-05, y: -155}
-  m_SizeDelta: {x: 0, y: 80}
+  m_AnchoredPosition: {x: -9.99999237, y: -120}
+  m_SizeDelta: {x: -20.0000153, y: 80}
   m_Pivot: {x: .5, y: 1}
 --- !u!114 &682567758
 MonoBehaviour:
@@ -788,6 +788,7 @@ MonoBehaviour:
   _name: {fileID: 1025639080}
   _newWord: {fileID: 1839283414}
   _usedWords: {fileID: 1288135282}
+  _textPad: {fileID: 1123783360}
   _check: {fileID: 1356064416}
   _cross: {fileID: 2063331805}
   _timeMeter: {fileID: 619432099}
@@ -1140,9 +1141,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 'sdf
-
-    asdf'
+  m_Text: used words
 --- !u!222 &1288135285
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1180,7 +1179,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
   m_AnchoredPosition: {x: 0, y: 5}
-  m_SizeDelta: {x: -40, y: 70}
+  m_SizeDelta: {x: -30, y: 70}
   m_Pivot: {x: .5, y: 0}
 --- !u!1 &1356064416
 GameObject:
@@ -1215,8 +1214,8 @@ RectTransform:
   m_RootOrder: 6
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: .5, y: 0}
-  m_AnchoredPosition: {x: 15, y: 80}
-  m_SizeDelta: {x: -25, y: 185}
+  m_AnchoredPosition: {x: 10, y: 70}
+  m_SizeDelta: {x: -15, y: 150}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &1356064418
 MonoBehaviour:
@@ -1645,8 +1644,8 @@ RectTransform:
   m_RootOrder: 5
   m_AnchorMin: {x: .5, y: 0}
   m_AnchorMax: {x: .5, y: 1}
-  m_AnchoredPosition: {x: 1.52587891e-05, y: -250}
-  m_SizeDelta: {x: 540, y: -520}
+  m_AnchoredPosition: {x: 1.52587891e-05, y: -230}
+  m_SizeDelta: {x: 540, y: -500}
   m_Pivot: {x: .5, y: 1}
 --- !u!114 &2010175382
 MonoBehaviour:
@@ -1720,8 +1719,8 @@ RectTransform:
   m_RootOrder: 7
   m_AnchorMin: {x: .5, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -15, y: 80}
-  m_SizeDelta: {x: -25, y: 185}
+  m_AnchoredPosition: {x: -10, y: 70}
+  m_SizeDelta: {x: -5, y: 150}
   m_Pivot: {x: 1, y: 0}
 --- !u!114 &2063331807
 MonoBehaviour:

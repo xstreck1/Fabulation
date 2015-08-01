@@ -16,7 +16,6 @@ Holograph
 Meteor
 Microscope
 Microbe
-Mothership
 Nuclear
 Particle
 Physics
@@ -33,7 +32,13 @@ Theory
 Time
 Universe
 #verbs
-experimenting
-researching
+to build
+to cure
+to discover
+to experiment
+to hybernate
+to pilot
+to research
+to terraform
 #adjectives
 

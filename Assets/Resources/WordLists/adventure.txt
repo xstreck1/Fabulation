@@ -26,10 +26,13 @@ Tent
 Treasure
 Victory
 Villain
-climbing
-flying
-hunting
-jumping
-sailing
-riding
-swimming
+#verbs
+to climb
+to fall
+to fly
+to hunt
+to jump
+to sail
+to ride
+to camp
+#adjectives

@@ -25,6 +25,16 @@ Man
 Mouse
 Mountain
 Table
+Village
 Water
 Woman
 Window
+#verbs
+to eat
+to travel
+to hitchhike
+to remember
+to talk
+to visit
+to sleep
+#adjectives

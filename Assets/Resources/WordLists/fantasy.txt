@@ -7,7 +7,6 @@ Beast
 Berserk
 Cauldron
 Chalice
-Conjuration
 Creature
 Dragon
 Dwarf
@@ -15,7 +14,6 @@ Druid
 Elixier
 Elf
 Empire
-Gift
 Gnome
 Goblin
 Golem
@@ -44,8 +42,15 @@ Talisman
 Thief
 Torch
 Troll
-Venom
 Wand
 Warrior
 Watch
 Wizard
+#verbs
+to conjure
+to defend
+to dissapear
+to fight
+to hex
+to heal
+to mix
