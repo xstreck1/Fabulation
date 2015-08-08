@@ -3,16 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 
 public class Words {
-    List<string> _unused = new List<string>();
-    List<string> _used = new List<string>();
+    List<string> _word_list = new List<string>();
+    List<string> _connectives = new List<string>();
 
     public Words()
     {
         foreach (var word_list in StaticData.word_lists.Where(x => StaticData.used_lists[x.Key] == true))
         {
-            _unused.InsertRange(0, word_list.Value);
+            _word_list.InsertRange(0, word_list.Value);
         }
-        if ((from word in _unused where char.IsUpper(word[0]) select word).Count() == 0)
+        foreach (var connective_list in StaticData.connectives_lists)
+        {
+            _connectives.InsertRange(0, connective_list.Value);
+        }
+        if ((from word in _word_list where char.IsUpper(word[0]) select word).Count() == 0)
         {
             throw new System.ArgumentException("No nouns for the current game.");
         }
@@ -24,24 +28,21 @@ public class Words {
     /// <param name="fresh"></param>
     /// <param name="noun_only"></param>
     /// <returns></returns>
-    public string GetWord (bool fresh, bool noun_only)
+    public string GetWord (bool noun_only)
     {
-        List<string> list = fresh ? _unused : _used;
-        var selected = (from word in list where (!noun_only || char.IsUpper(word[0])) select word);
-        return selected.Count() == 0 ? "" : selected.ElementAt(UnityEngine.Random.Range(0, selected.Count()));
-    }
-
-    public void Finished(string word, bool accepted)
-    {
-        _unused.Remove(word);
-        if (accepted)
+        var selected = (from word in _word_list where (!noun_only || char.IsUpper(word[0])) select word);
+        if (selected.Count() == 0) {
+            return "";
+        } else
         {
-            _used.Insert(0, word);
+            string word = selected.ElementAt(UnityEngine.Random.Range(0, selected.Count()));
+            _word_list.Remove(word);
+            return word;
         }
     }
 
-    public List<string> GetUsed ()
+    public string GetConnective()
     {
-        return _used;
+        return _connectives.ElementAt(UnityEngine.Random.Range(0, _connectives.Count()));
     }
 }

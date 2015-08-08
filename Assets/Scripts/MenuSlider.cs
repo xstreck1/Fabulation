@@ -31,13 +31,9 @@ public class MenuSlider : MonoBehaviour {
         {
             StaticData.players = (int)value;
         }
-        else if (this.name == "PointsCount")
+        else if (this.name == "RoundsCount")
         {
-            StaticData.points = (int)value;
-        }
-        else if (this.name == "LivesCount")
-        {
-            StaticData.lives = (int)value;
+            StaticData.rounds = (int)value;
         }
         else if (this.name == "TimeCount")
         {

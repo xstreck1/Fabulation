@@ -18,17 +18,17 @@ public class ModeSwitch : MonoBehaviour {
 
     public void Click()
     {
-        StaticData.current_mode_ID = (StaticData.current_mode_ID + 1) % StaticData.mode_list.Count;
-        SetValue();
+        //StaticData.current_mode_ID = (StaticData.current_mode_ID + 1) % StaticData.mode_list.Count;
+        //SetValue();
     }
 
     // 
     void SetValue()
     {
-        PlayerPrefs.SetInt(this.name, StaticData.current_mode_ID);
-        _button_text.text = StaticData.mode_list[StaticData.current_mode_ID].name;
-        bool using_lives = StaticData.mode_list[StaticData.current_mode_ID].using_lives;
-        livesCount.SetActive(using_lives);
-        pointsCount.SetActive(!using_lives);
+        //PlayerPrefs.SetInt(this.name, StaticData.current_mode_ID);
+        //_button_text.text = StaticData.mode_list[StaticData.current_mode_ID].name;
+        //bool using_lives = StaticData.mode_list[StaticData.current_mode_ID].using_lives;
+        //livesCount.SetActive(using_lives);
+        //pointsCount.SetActive(!using_lives);
     }
 }
