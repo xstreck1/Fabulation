@@ -30,6 +30,9 @@ public static class StaticData
 
     static StaticData()
     {
+        // Keep awake
+        Screen.sleepTimeout = SleepTimeout.NeverSleep;
+
         // Load the dictionaries
         string[] used_genres = { "adventure", "crimi", "drama", "fantasy", "fairytale", "horror", "road story", "sci-fi", "western" };
         foreach (string genre_name in used_genres)

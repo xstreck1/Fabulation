@@ -48,6 +48,7 @@ public class Game : MonoBehaviour
     public int NegativeVotes { get; private set; }
     List<bool> _accepted;
     List<GameObject> _judge_buttons;
+    List<int> _last_score;
 
     void Start()
     {
@@ -56,6 +57,7 @@ public class Game : MonoBehaviour
         _history = new List<UsedWord>();
         _judge_buttons = new List<GameObject>();
         _accepted = Enumerable.Repeat(false, StaticData.players).ToList();
+        _last_score = Enumerable.Repeat(0, StaticData.players).ToList();
 
         SetIconColor();
         SetPlayerName();
@@ -178,7 +180,8 @@ public class Game : MonoBehaviour
         else
         {
             SetPanel();
-            SetPlayer();
+            SetIconColor();
+            SetPlayerName();
             SetJudgeControls();
         }
         SetPageNumber();
@@ -203,15 +206,19 @@ public class Game : MonoBehaviour
         return text.Replace("\n", " ");
     }
 
-    void SetPlayer()
-    {
-        SetIconColor();
-        SetPlayerName();
-    }
-
     void SetIconColor()
     {
-        _icon.GetComponent<Image>().color = StaticData.colors[PlayerNo];
+        if (_last_score[PlayerNo] > 0)
+        {
+            _icon.GetComponent<Image>().color = new Color(0f, 0.5f, 0f);
+        } else if (_last_score[PlayerNo] == 0)
+        {
+            _icon.GetComponent<Image>().color = new Color(0.5f, 0.3f, 0f);
+        } else
+        {
+            _icon.GetComponent<Image>().color = new Color(0.5f, 0f, 0f);
+        }
+        _last_score[PlayerNo] = 0;
     }
 
     void SetPlayerName()
@@ -241,6 +248,7 @@ public class Game : MonoBehaviour
             NegativeVotes--;
         }
         int affected_player = (StaticData.players + PlayerNo - i) % StaticData.players;
+        _last_score[affected_player] += _score_change;
         StaticData.score[affected_player] += _score_change;
         SetScoring(_judge_buttons[i], false);
         SetVoteNumbers();
