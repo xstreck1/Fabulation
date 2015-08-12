@@ -567,6 +567,18 @@ Prefab:
       propertyPath: m_Name
       value: adventure
       objectReference: {fileID: 0}
+    - target: {fileID: 22477664, guid: 6171549dd0f934449aa3967fa8043e64, type: 2}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 22477664, guid: 6171549dd0f934449aa3967fa8043e64, type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22477664, guid: 6171549dd0f934449aa3967fa8043e64, type: 2}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6171549dd0f934449aa3967fa8043e64, type: 2}
   m_IsPrefabParent: 0
