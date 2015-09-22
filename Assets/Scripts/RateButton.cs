@@ -1,41 +1,28 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.UI;
-using System;
 
 public class RateButton : MonoBehaviour {
     public int _scoreChange;
     Button _button;
-    Game _game;
-    int _my_no;
+    int _state; // 1 on, 0 undecided, -1 off
+    List<float> _scale_factors = new List<float> { 0.5f, 0.75f, 1f };
 
 	// Use this for initialization
-	void Start () {
-        _my_no = (int) Char.GetNumericValue (transform.parent.name, transform.parent.name.Length - 1);
-        _button = this.GetComponent<Button>();
-        _button.onClick.AddListener(Click);
-        _game = GameObject.Find("Canvas").GetComponent<Game>();
-    }
-	
-    void Update()
+	void Start ()
     {
-        if (_scoreChange > 0)
-        {
-            if (_game.PositiveVotes <= 0)
-            {
-                gameObject.SetActive(false);
-            }
-        } else
-        {
-            if (_game.NegativeVotes <= 0)
-            {
-                gameObject.SetActive(false);
-            }
-        }
+        _button = this.GetComponent<Button>();
     }
 
-    void Click()
+    void OnEnable()
     {
-        _game.JudgeClick(_my_no, _scoreChange);
+        Switch(0);
+    }
+
+    public void Switch (int new_state)
+    {
+        _state = new_state;
+        float scale = _scale_factors[new_state + 1];
+        transform.localScale = Vector3.one * scale;
     }
 }

@@ -233,7 +233,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11492568, guid: 010bdf8e705e8ee41893c58364ac76ec, type: 2}
       propertyPath: m_MaxValue
-      value: 15
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 22447252, guid: 010bdf8e705e8ee41893c58364ac76ec, type: 2}
       propertyPath: m_AnchorMin.x
@@ -464,6 +464,10 @@ Prefab:
     - target: {fileID: 11492568, guid: 010bdf8e705e8ee41893c58364ac76ec, type: 2}
       propertyPath: m_Value
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 11492568, guid: 010bdf8e705e8ee41893c58364ac76ec, type: 2}
+      propertyPath: m_MaxValue
+      value: 9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 010bdf8e705e8ee41893c58364ac76ec, type: 2}

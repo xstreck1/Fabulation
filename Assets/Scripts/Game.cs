@@ -47,7 +47,7 @@ public class Game : MonoBehaviour
     public int PositiveVotes { get; private set; }
     public int NegativeVotes { get; private set; }
     List<bool> _accepted;
-    List<GameObject> _judge_buttons;
+    List<GameObject> _judgers;
     List<int> _last_score;
 
     void Start()
@@ -55,7 +55,7 @@ public class Game : MonoBehaviour
         StaticData.ResetScore();
         _words = new Words();
         _history = new List<UsedWord>();
-        _judge_buttons = new List<GameObject>();
+        _judgers = new List<GameObject>();
         _accepted = Enumerable.Repeat(false, StaticData.players).ToList();
         _last_score = Enumerable.Repeat(0, StaticData.players).ToList();
 
@@ -104,11 +104,11 @@ public class Game : MonoBehaviour
         var prefab = Resources.Load("Judger");
         foreach (int i in Enumerable.Range(0, StaticData.players - 1))
         {
-            GameObject new_button = Instantiate(prefab) as GameObject;
-            new_button.name = "Judger" + i;
-            new_button.transform.position = new Vector3(0, -80 * (StaticData.players - 1 - i), 0);
-            new_button.transform.SetParent(_judgePanel.transform, false);
-            _judge_buttons.Add(new_button);
+            GameObject new_judger = Instantiate(prefab) as GameObject;
+            new_judger.name = "Judger" + i;
+            new_judger.transform.position = new Vector3(0, -80 * (StaticData.players - 1 - i), 0);
+            new_judger.transform.SetParent(_judgePanel.transform, false);
+            _judgers.Add(new_judger);
         }
     }
 
@@ -120,29 +120,31 @@ public class Game : MonoBehaviour
         _role.GetComponent<Text>().text = Narrator ? "narrator" : "judge";
     }
 
-    void SetScoring(GameObject judger, bool active)
-    {
-        judger.transform.FindChild("Up").gameObject.SetActive(active);
-        judger.transform.FindChild("Down").gameObject.SetActive(active);
-    }
-
     void SetJudgeControls()
     {
         int tested_round = _step_no / PHASE_COUNT;
         int active_count = 0;
-        foreach (GameObject judger in _judge_buttons)
+        foreach (GameObject judger in _judgers)
         {
             Text current_text = judger.transform.FindChild("Word").FindChild("Text").GetComponent<Text>();
             if (_step_no / PHASE_COUNT < StaticData.players)
             {
                 current_text.text = "initial round";
+                judger.GetComponent<Judger>().Disable();
             }
             else
             {
                 bool to_judge = _history[--tested_round].accepted;
-                if (to_judge) active_count++;
-                current_text.text = to_judge ? _history[tested_round].text : "skipped";
-                SetScoring(judger, to_judge);
+                if (to_judge)
+                {
+                    active_count++;
+                    current_text.text = _history[tested_round].text;
+                }
+                else
+                {
+                    current_text.text = "skipped";
+                    judger.GetComponent<Judger>().Disable();
+                }
             }
         }
         PositiveVotes = Mathf.Min(active_count, StaticData.players / 2);
@@ -254,24 +256,20 @@ public class Game : MonoBehaviour
     {
         if (PositiveVotes == 0 && NegativeVotes == 0 && !Narrator)
         {
+            for (int i = 0; i < _judgers.Count; i++)
+            {
+                int affected_player = (StaticData.players + PlayerNo - i) % StaticData.players;
+                _last_score[affected_player] += _judgers[i].GetComponent<Judger>().GetScore();
+                StaticData.score[affected_player] += _judgers[i].GetComponent<Judger>().GetScore();
+            }
             Next();
         }
     }
 
-    public void JudgeClick(int i, int _score_change)
+    public void JudgeClick(int pos_change, int neg_change)
     {
-        if (_score_change > 0)
-        {
-            PositiveVotes--;
-        }
-        else
-        {
-            NegativeVotes--;
-        }
-        int affected_player = (StaticData.players + PlayerNo - i) % StaticData.players;
-        _last_score[affected_player] += _score_change;
-        StaticData.score[affected_player] += _score_change;
-        SetScoring(_judge_buttons[i], false);
+        PositiveVotes += pos_change;
+        NegativeVotes += neg_change;
         SetVoteNumbers();
     }
 }
