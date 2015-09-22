@@ -65,6 +65,7 @@ public class Game : MonoBehaviour
         CreateJudgeButtons();
         SetPanel();
         SetJudgeControls();
+        Next();
     }
     void Update()
     {
@@ -78,18 +79,18 @@ public class Game : MonoBehaviour
         }
         else if (old_timer > 0 && _timer <= 0)
         {
-            Next();
+            Check();
         }
         else
         {
             _timeMeter.transform.localScale = Vector3.one;
         }
 
-        // Judging part
-        if (PositiveVotes == 0 && NegativeVotes == 0 && !Narrator)
-        {
-            Next();
-        }
+        // Judging part (auto-end)
+        // if (PositiveVotes == 0 && NegativeVotes == 0 && !Narrator)
+        // { 
+        //    Next();
+        // }
 
         // Game control
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -98,9 +99,11 @@ public class Game : MonoBehaviour
         }
     }
 
-    void CreateJudgeButtons() {
+    void CreateJudgeButtons()
+    {
         var prefab = Resources.Load("Judger");
-        foreach (int i in Enumerable.Range(0, StaticData.players - 1)) {
+        foreach (int i in Enumerable.Range(0, StaticData.players - 1))
+        {
             GameObject new_button = Instantiate(prefab) as GameObject;
             new_button.name = "Judger" + i;
             new_button.transform.position = new Vector3(0, -80 * (StaticData.players - 1 - i), 0);
@@ -127,13 +130,18 @@ public class Game : MonoBehaviour
     {
         int tested_round = _step_no / PHASE_COUNT;
         int active_count = 0;
-        if (tested_round >= StaticData.players) // The first player is the first to judge
+        foreach (GameObject judger in _judge_buttons)
         {
-            foreach (GameObject judger in _judge_buttons)
+            Text current_text = judger.transform.FindChild("Word").FindChild("Text").GetComponent<Text>();
+            if (_step_no / PHASE_COUNT < StaticData.players)
+            {
+                current_text.text = "initial round";
+            }
+            else
             {
                 bool to_judge = _history[--tested_round].accepted;
                 if (to_judge) active_count++;
-                judger.transform.FindChild("Word").FindChild("Text").GetComponent<Text>().text = to_judge ? _history[tested_round].text : "skipped";
+                current_text.text = to_judge ? _history[tested_round].text : "skipped";
                 SetScoring(judger, to_judge);
             }
         }
@@ -154,7 +162,8 @@ public class Game : MonoBehaviour
         {
             _newWord.GetComponent<Text>().text = "The story how\n" + _words.GetWord(true) + "...";
         }
-        else if (LastPlayer) { // Last round, last player.
+        else if (LastPlayer)
+        { // Last round, last player.
             _newWord.GetComponent<Text>().text = "...The End.";
         }
         else
@@ -200,7 +209,8 @@ public class Game : MonoBehaviour
     string GetStoryText()
     {
         string text = "";
-        foreach (UsedWord word in _history) {
+        foreach (UsedWord word in _history)
+        {
             text += word.text;
         }
         return text.Replace("\n", " ");
@@ -211,10 +221,12 @@ public class Game : MonoBehaviour
         if (_last_score[PlayerNo] > 0)
         {
             _icon.GetComponent<Image>().color = new Color(0f, 0.5f, 0f);
-        } else if (_last_score[PlayerNo] == 0)
+        }
+        else if (_last_score[PlayerNo] == 0)
         {
             _icon.GetComponent<Image>().color = new Color(0.5f, 0.3f, 0f);
-        } else
+        }
+        else
         {
             _icon.GetComponent<Image>().color = new Color(0.5f, 0f, 0f);
         }
@@ -238,12 +250,21 @@ public class Game : MonoBehaviour
         Next();
     }
 
+    public void Speak()
+    {
+        if (PositiveVotes == 0 && NegativeVotes == 0 && !Narrator)
+        {
+            Next();
+        }
+    }
+
     public void JudgeClick(int i, int _score_change)
     {
         if (_score_change > 0)
         {
             PositiveVotes--;
-        } else
+        }
+        else
         {
             NegativeVotes--;
         }
