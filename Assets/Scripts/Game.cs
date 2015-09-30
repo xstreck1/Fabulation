@@ -17,9 +17,10 @@ public class Game : MonoBehaviour
 {
     public GameObject _narratorPanel;
     public GameObject _judgePanel;
-    public GameObject _icon;
-    public GameObject _role;
-    public GameObject _name;
+    // public GameObject _icon;
+    // public GameObject _role;
+    public GameObject _name1;
+    public GameObject _name2;
     public GameObject _newWord;
     // public GameObject _oldWord;
     public GameObject _usedWords;
@@ -31,9 +32,9 @@ public class Game : MonoBehaviour
     public GameObject _positive;
     public GameObject _negative;
 
-    readonly float _REACTIVE_DELAY = 1f; // In seconds, how long are the buttons blocked to prevent double-click.
+    // readonly float _REACTIVE_DELAY = 1f; // In seconds, how long are the buttons blocked to prevent double-click.
     // readonly float _JUDGE_TIME = 10f; // In seconds, how long the judge can decide.
-    readonly float _REROLL_TIME = 1f / 3f; // what fraction of time is lost on re-roll
+    // readonly float _REROLL_TIME = 1f / 3f; // what fraction of time is lost on re-roll
     readonly int PHASE_COUNT = 2; // Two phases per player
     Words _words;
     List<UsedWord> _history;
@@ -59,7 +60,7 @@ public class Game : MonoBehaviour
         _accepted = Enumerable.Repeat(false, StaticData.players).ToList();
         _last_score = Enumerable.Repeat(0, StaticData.players).ToList();
 
-        SetIconColor();
+        // SetIconColor();
         SetPlayerName();
 
         CreateJudgeButtons();
@@ -106,7 +107,7 @@ public class Game : MonoBehaviour
         {
             GameObject new_judger = Instantiate(prefab) as GameObject;
             new_judger.name = "Judger" + i;
-            new_judger.transform.position = new Vector3(0, -80 * (StaticData.players - 1 - i), 0);
+            new_judger.transform.position = new Vector3(0, -100 -80 * (StaticData.players - 1 - i), 0);
             new_judger.transform.SetParent(_judgePanel.transform, false);
             _judgers.Add(new_judger);
         }
@@ -117,7 +118,7 @@ public class Game : MonoBehaviour
         _narratorPanel.SetActive(Narrator);
         _judgePanel.SetActive(!Narrator);
         _timer = Narrator && !FirstPlayer && !LastPlayer ? StaticData.seconds : 0;
-        _role.GetComponent<Text>().text = Narrator ? "narrator" : "judge";
+        // _role.GetComponent<Text>().text = Narrator ? "speak" : "vote";
     }
 
     void SetJudgeControls()
@@ -127,13 +128,13 @@ public class Game : MonoBehaviour
         foreach (GameObject judger in _judgers)
         {
             Text current_text = judger.transform.FindChild("Word").FindChild("Text").GetComponent<Text>();
-            if (_step_no / PHASE_COUNT < StaticData.players)
+            if (RoundNo == 0)
             {
-                current_text.text = "initial round";
-                judger.GetComponent<Judger>().Disable();
+                judger.SetActive(false);
             }
             else
             {
+                judger.SetActive(true);
                 bool to_judge = _history[--tested_round].accepted;
                 if (to_judge)
                 {
@@ -191,7 +192,7 @@ public class Game : MonoBehaviour
         else
         {
             SetPanel();
-            SetIconColor();
+            // SetIconColor();
             SetPlayerName();
             SetJudgeControls();
         }
@@ -213,12 +214,15 @@ public class Game : MonoBehaviour
         string text = "";
         foreach (UsedWord word in _history)
         {
-            text += word.text;
+            if (word.accepted)
+            {
+                text += word.text;
+            }
         }
         return text.Replace("\n", " ");
     }
 
-    void SetIconColor()
+    /*void SetIconColor()
     {
         if (_last_score[PlayerNo] > 0)
         {
@@ -233,11 +237,12 @@ public class Game : MonoBehaviour
             _icon.GetComponent<Image>().color = new Color(0.5f, 0f, 0f);
         }
         _last_score[PlayerNo] = 0;
-    }
+    }*/
 
     void SetPlayerName()
     {
-        _name.GetComponent<Text>().text = "Player " + (PlayerNo + 1);
+        _name1.GetComponent<Text>().text = "Player " + (PlayerNo + 1);
+        _name2.GetComponent<Text>().text = "Player " + (PlayerNo + 1);
     }
 
     public void Check()
