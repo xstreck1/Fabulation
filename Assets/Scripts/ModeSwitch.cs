@@ -4,31 +4,23 @@ using System;
 using UnityEngine.UI;
 
 public class ModeSwitch : MonoBehaviour {
-    Text _button_text;
-    public GameObject livesCount;
-    public GameObject pointsCount;
+    public GameObject _button_text;
 
     // Read from the player prefs whether the dictionary has been chosen
     void Start()
     {
-        _button_text = transform.FindChild("Text").GetComponent<Text>();
-        StaticData.current_mode_ID = PlayerPrefs.GetInt(this.name, 0);
         SetValue();
     }
 
     public void Click()
     {
-        //StaticData.current_mode_ID = (StaticData.current_mode_ID + 1) % StaticData.mode_list.Count;
-        //SetValue();
+        StaticData._simple = !StaticData._simple;
+        SetValue();
     }
 
     // 
     void SetValue()
     {
-        //PlayerPrefs.SetInt(this.name, StaticData.current_mode_ID);
-        //_button_text.text = StaticData.mode_list[StaticData.current_mode_ID].name;
-        //bool using_lives = StaticData.mode_list[StaticData.current_mode_ID].using_lives;
-        //livesCount.SetActive(using_lives);
-        //pointsCount.SetActive(!using_lives);
+        _button_text.GetComponent<Text>().text = StaticData._simple ? "simple" : "advanced";
     }
 }

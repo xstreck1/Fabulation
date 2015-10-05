@@ -129,7 +129,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &11421678
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -165,7 +165,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: c678fd0088d2f964f8bddcf80d38bf26, type: 3}
     m_FontSize: 25
     m_FontStyle: 0
     m_BestFit: 0
@@ -176,7 +176,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Players
+  m_Text: PLAYERS
 --- !u!114 &11433878
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -269,10 +269,10 @@ MonoBehaviour:
   m_FillRect: {fileID: 22474796}
   m_HandleRect: {fileID: 22483408}
   m_Direction: 0
-  m_MinValue: 1
-  m_MaxValue: 10
+  m_MinValue: 3
+  m_MaxValue: 9
   m_WholeNumbers: 1
-  m_Value: 2
+  m_Value: 3
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
@@ -345,7 +345,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: .25}
   m_AnchorMax: {x: 1, y: .75}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 60, y: 0}
   m_Pivot: {x: .5, y: .5}
 --- !u!224 &22463506
 RectTransform:
@@ -364,8 +364,8 @@ RectTransform:
   m_RootOrder: 1
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -25}
-  m_SizeDelta: {x: 0, y: -25}
+  m_AnchoredPosition: {x: 0, y: -50}
+  m_SizeDelta: {x: -40, y: -50}
   m_Pivot: {x: .5, y: 1}
 --- !u!224 &22474796
 RectTransform:
@@ -399,7 +399,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 5.80000019, y: 0}
-  m_SizeDelta: {x: 31.5, y: 0}
+  m_SizeDelta: {x: 100, y: 0}
   m_Pivot: {x: .5, y: .5}
 --- !u!224 &22484062
 RectTransform:

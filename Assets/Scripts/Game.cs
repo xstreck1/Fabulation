@@ -75,7 +75,7 @@ public class Game : MonoBehaviour
         _timer -= Time.deltaTime;
         if (_timer > 0)
         {
-            float fill = (StaticData.seconds - _timer) / StaticData.seconds;
+            float fill = (StaticData.Seconds - _timer) / StaticData.Seconds;
             _timeMeter.transform.localScale = new Vector3(fill, 1f, 1f);
         }
         else if (old_timer > 0 && _timer <= 0)
@@ -106,10 +106,10 @@ public class Game : MonoBehaviour
         foreach (int i in Enumerable.Range(0, StaticData.players - 1))
         {
             GameObject new_judger = Instantiate(prefab) as GameObject;
-            new_judger.name = "Judger" + i;
+            new_judger.name = "Judger" + (StaticData.players - 1 - i);
             new_judger.transform.position = new Vector3(0, -100 -80 * (StaticData.players - 1 - i), 0);
             new_judger.transform.SetParent(_judgePanel.transform, false);
-            _judgers.Add(new_judger);
+            _judgers.Insert(0, new_judger);
         }
     }
 
@@ -117,7 +117,7 @@ public class Game : MonoBehaviour
     {
         _narratorPanel.SetActive(Narrator);
         _judgePanel.SetActive(!Narrator);
-        _timer = Narrator && !FirstPlayer && !LastPlayer ? StaticData.seconds : 0;
+        _timer = Narrator && !FirstPlayer && !LastPlayer ? StaticData.Seconds : 0;
         // _role.GetComponent<Text>().text = Narrator ? "speak" : "vote";
     }
 
@@ -163,7 +163,7 @@ public class Game : MonoBehaviour
     {
         if (FirstPlayer) // First word
         {
-            _newWord.GetComponent<Text>().text = "The story how\n" + _words.GetWord(true) + "...";
+            _newWord.GetComponent<Text>().text = "Let me tell the story how\n" + _words.GetWord(true) + "...";
         }
         else if (LastPlayer)
         { // Last round, last player.
@@ -171,7 +171,14 @@ public class Game : MonoBehaviour
         }
         else
         {
-            _newWord.GetComponent<Text>().text = ", " + _words.GetConnective() + "...\n" + _words.GetWord(true) + "...";
+            if (StaticData._simple)
+            {
+                _newWord.GetComponent<Text>().text = ", ..." + _words.GetWord(true) + "...";
+            }
+            else
+            {
+                _newWord.GetComponent<Text>().text = ", " + _words.GetConnective() + "...\n" + _words.GetWord(true) + "...";
+            }
         }
         _usedWords.GetComponent<Text>().text = GetStoryText();
     }
@@ -263,7 +270,7 @@ public class Game : MonoBehaviour
         {
             for (int i = 0; i < _judgers.Count; i++)
             {
-                int affected_player = (StaticData.players + PlayerNo - i) % StaticData.players;
+                int affected_player = (PlayerNo + i + 1) % StaticData.players;
                 _last_score[affected_player] += _judgers[i].GetComponent<Judger>().GetScore();
                 StaticData.score[affected_player] += _judgers[i].GetComponent<Judger>().GetScore();
             }

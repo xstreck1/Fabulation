@@ -26,18 +26,20 @@ public class MenuSlider : MonoBehaviour {
     public void UpdateLabel()
     {
         int value = (int)_slider.value;
-        _label_text.text = _init_text + ": " + value.ToString();
         if (this.name == "PlayersCount")
         {
             StaticData.players = (int)value;
+            _label_text.text = _init_text + ": " + StaticData.players;
         }
         else if (this.name == "RoundsCount")
         {
             StaticData.rounds = (int)value;
+            _label_text.text = _init_text + ": " + StaticData.rounds;
         }
         else if (this.name == "TimeCount")
         {
-            StaticData.seconds = (int)value;
+            StaticData.Seconds = (int)value;
+            _label_text.text = _init_text + ": " + StaticData.Seconds;
         }
         else
         {

@@ -22,10 +22,37 @@ public static class StaticData
     static public Dictionary<string, List<string>> word_lists = new Dictionary<string, List<string>>();
     static public Dictionary<string, List<string>> connectives_lists = new Dictionary<string, List<string>>();
     static public Dictionary<string, bool> used_lists = new Dictionary<string, bool>();
-    static public int current_mode_ID = 0;
+    static public bool _simple = true;
     static public int players = 3;
     static public int rounds = 3;
-    static public int seconds = 30;
+    static int seconds = 4;
+    public static int Seconds {
+        get
+        {
+            switch (seconds) {
+                case 1:
+                    return 10;
+                case 2:
+                    return 20;
+                case 3:
+                    return 30;
+                case 4:
+                    return 45;
+                case 5:
+                    return 60;
+                case 6:
+                    return 90;
+                case 7:
+                    return 120;
+                default:
+                    return 0;
+            }
+        }
+        set
+        {
+            { seconds = value; }
+        }
+    }
     static public List<int> score = new List<int>();
 
     static StaticData()
