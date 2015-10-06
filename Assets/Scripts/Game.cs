@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine.UI;
+using System;
 
 
 public struct UsedWord
@@ -59,6 +60,7 @@ public class Game : MonoBehaviour
         _judgers = new List<GameObject>();
         _accepted = Enumerable.Repeat(false, StaticData.players).ToList();
         _last_score = Enumerable.Repeat(0, StaticData.players).ToList();
+        StaticData.names = Enumerable.Repeat<Func<string>>(_words.GetName, StaticData.players).Select(f => f()).ToList();
 
         // SetIconColor();
         SetPlayerName();
@@ -68,6 +70,8 @@ public class Game : MonoBehaviour
         SetJudgeControls();
         Next();
     }
+    
+
     void Update()
     {
         // Timing related progress
@@ -167,11 +171,11 @@ public class Game : MonoBehaviour
         }
         else if (LastPlayer)
         { // Last round, last player.
-            _newWord.GetComponent<Text>().text = "...The End.";
+            _newWord.GetComponent<Text>().text = ", ... The End.";
         }
         else
         {
-            if (StaticData._simple)
+            if (StaticData.simple)
             {
                 _newWord.GetComponent<Text>().text = ", ..." + _words.GetWord(true) + "...";
             }
@@ -188,7 +192,7 @@ public class Game : MonoBehaviour
         _step_no++;
         if (RoundNo >= StaticData.rounds)
         {
-            Application.LoadLevel("Score");
+            Finish();
         }
         else if (Narrator)
         {
@@ -248,8 +252,7 @@ public class Game : MonoBehaviour
 
     void SetPlayerName()
     {
-        _name1.GetComponent<Text>().text = "Player " + (PlayerNo + 1);
-        _name2.GetComponent<Text>().text = "Player " + (PlayerNo + 1);
+        _name1.GetComponent<Text>().text = _name2.GetComponent<Text>().text = StaticData.names[PlayerNo];
     }
 
     public void Check()
@@ -283,5 +286,11 @@ public class Game : MonoBehaviour
         PositiveVotes += pos_change;
         NegativeVotes += neg_change;
         SetVoteNumbers();
+    }
+
+    public void Finish()
+    {
+        StaticData.story = GetStoryText();
+        Application.LoadLevel("Score");
     }
 }

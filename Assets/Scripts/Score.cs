@@ -2,14 +2,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using System.Linq;
 
 public class Score : MonoBehaviour {
-    Text _score_text;
+    Text _author_name;
+    Text _story_text;
 
     public void Start ()
     {
-        _score_text = transform.FindChild("Score").FindChild("ScoreText").GetComponent<Text>();
-        SetScore();
+        _author_name = transform.FindChild("Author").FindChild("Author Text").GetComponent<Text>();
+        _story_text = transform.FindChild("Story").FindChild("Story Text").GetComponent<Text>();
+        SetResults();
     }
 
     public void Update()
@@ -20,13 +23,21 @@ public class Score : MonoBehaviour {
         }
     }
 
-    public void SetScore()
+    public void SetResults()
     {
-        _score_text.text = "";
-        for (int player_no = 0; player_no < StaticData.players; player_no++)
+        List<string> winners = new List<string>();
+        int max_score = StaticData.score.Max();
+        for (int i = 0; i < StaticData.players; i++)
         {
-            _score_text.text += "Player " + (player_no+1).ToString() + ": " + StaticData.score[player_no].ToString() + "\n";
+            if (StaticData.score[i] == max_score)
+            {
+                winners.Add(StaticData.names[i]);
+            }
         }
+        string winner = winners.ElementAt(UnityEngine.Random.Range(0, winners.Count()));
+        _author_name.text = winner;
+
+        _story_text.text = StaticData.story;
     }
 
     public void FinishGame()

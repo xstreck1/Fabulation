@@ -5,6 +5,7 @@ using System.Linq;
 public class Words {
     List<string> _word_list = new List<string>();
     List<string> _connectives = new List<string>();
+    List<string> _names = new List<string>();
 
     public Words()
     {
@@ -20,6 +21,7 @@ public class Words {
         {
             throw new System.ArgumentException("No nouns for the current game.");
         }
+        _names.InsertRange(0, StaticData.names_list);
     }
 
     /// <summary>
@@ -44,5 +46,12 @@ public class Words {
     public string GetConnective()
     {
         return _connectives.ElementAt(UnityEngine.Random.Range(0, _connectives.Count()));
+    }
+
+    public string GetName()
+    {
+        string name = _names.ElementAt(UnityEngine.Random.Range(0, _names.Count()));
+        _names.Remove(name);
+        return name;
     }
 }

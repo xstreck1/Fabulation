@@ -5,7 +5,6 @@ public class Genres : MonoBehaviour {
 
 	void Start ()
     {
-	
 	}
 
     public void Update()

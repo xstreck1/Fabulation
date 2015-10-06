@@ -21,8 +21,12 @@ public static class StaticData
 
     static public Dictionary<string, List<string>> word_lists = new Dictionary<string, List<string>>();
     static public Dictionary<string, List<string>> connectives_lists = new Dictionary<string, List<string>>();
+    static public List<string> names_list = new List<string>();
     static public Dictionary<string, bool> used_lists = new Dictionary<string, bool>();
-    static public bool _simple = true;
+    static public List<int> score = new List<int>();
+    static public List<string> names = new List<string>();
+    static public string story;
+    static public bool simple = true;
     static public int players = 3;
     static public int rounds = 3;
     static int seconds = 4;
@@ -53,7 +57,6 @@ public static class StaticData
             { seconds = value; }
         }
     }
-    static public List<int> score = new List<int>();
 
     static StaticData()
     {
@@ -76,6 +79,9 @@ public static class StaticData
             connectives_lists[connective_type] = text_asset.text.Split(new string[] { "\r\n", "\n" }, System.StringSplitOptions.None).ToList<string>();
             connectives_lists[connective_type].RemoveAll(x => x.Length == 0 || x[0] == '#'); // Remove all the lines that start with #
         }
+        
+        names_list = (Resources.Load("names") as TextAsset).text.Split(new string[] { "\r\n", "\n" }, System.StringSplitOptions.None).ToList<string>();
+        names_list.RemoveAll(x => x.Length == 0 || x[0] == '#'); // Remove all the lines that start with #
 
         ResetScore();
     }
@@ -83,5 +89,6 @@ public static class StaticData
     static public void ResetScore()
     {
         score = Enumerable.Repeat(0, players).ToList();
+        names = Enumerable.Repeat("", players).ToList();
     }
 }
