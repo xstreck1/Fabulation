@@ -25,6 +25,7 @@ public static class StaticData
     static public Dictionary<string, bool> used_lists = new Dictionary<string, bool>();
     static public List<int> score = new List<int>();
     static public List<string> names = new List<string>();
+
     static public string story;
     static public bool simple = true;
     static public int players = 3;

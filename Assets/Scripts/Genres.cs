@@ -2,7 +2,6 @@
 using System.Linq;
 
 public class Genres : MonoBehaviour {
-
 	void Start ()
     {
 	}

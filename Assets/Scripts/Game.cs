@@ -5,7 +5,6 @@ using System.Linq;
 using UnityEngine.UI;
 using System;
 
-
 public struct UsedWord
 {
     public int round;
@@ -16,38 +15,41 @@ public struct UsedWord
 
 public class Game : MonoBehaviour
 {
-    public GameObject _narratorPanel;
+    public GameObject _namesPanel;
+    public GameObject _speakerPanel;
     public GameObject _judgePanel;
-    // public GameObject _icon;
-    // public GameObject _role;
-    public GameObject _name1;
-    public GameObject _name2;
+    public GameObject _switchPanel;
+    public GameObject _instructionsSpeaker;
+    public GameObject _instructionsJudge;
     public GameObject _newWord;
-    // public GameObject _oldWord;
     public GameObject _usedWords;
     public GameObject _textPad;
     public GameObject _check;
     public GameObject _cross;
     public GameObject _timeMeter;
     public GameObject _pageNumber;
-    public GameObject _positive;
     public GameObject _negative;
+    public GameObject _positive;
 
-    // readonly float _REACTIVE_DELAY = 1f; // In seconds, how long are the buttons blocked to prevent double-click.
-    // readonly float _JUDGE_TIME = 10f; // In seconds, how long the judge can decide.
-    // readonly float _REROLL_TIME = 1f / 3f; // what fraction of time is lost on re-roll
-    readonly int PHASE_COUNT = 2; // Two phases per player
+#if UNITY_EDITOR
+    readonly float PASS_TIME = 0.1f;
+#else
+    readonly float PASS_TIME = 1.5f;
+#endif
+    readonly int PHASE_COUNT = 3; // Three phases per player
+
     Words _words;
-    List<UsedWord> _history;
     float _timer;
     int _step_no;
-    int PlayerNo { get { return (_step_no / PHASE_COUNT) % StaticData.players; } }
-    int RoundNo { get { return _step_no / (PHASE_COUNT * StaticData.players); } }
+
+    public int PlayerNo { get { return (_step_no / PHASE_COUNT) % StaticData.players; } }
+    public int RoundNo { get { return _step_no / (PHASE_COUNT * StaticData.players); } }
     bool FirstPlayer { get { return _step_no / PHASE_COUNT == 0; } }
     bool LastPlayer { get { return RoundNo + 1 >= StaticData.rounds && PlayerNo == StaticData.players - 1; } }
-    bool Narrator { get { return _step_no % 2 == 1; } }
     public int PositiveVotes { get; private set; }
     public int NegativeVotes { get; private set; }
+
+    List<UsedWord> _history;
     List<bool> _accepted;
     List<GameObject> _judgers;
     List<int> _last_score;
@@ -62,15 +64,17 @@ public class Game : MonoBehaviour
         _last_score = Enumerable.Repeat(0, StaticData.players).ToList();
         StaticData.names = Enumerable.Repeat<Func<string>>(_words.GetName, StaticData.players).Select(f => f()).ToList();
 
-        // SetIconColor();
         SetPlayerName();
+
+        _namesPanel.SetActive(false);
+        _judgePanel.SetActive(false);
+        _switchPanel.SetActive(false);
+        _speakerPanel.SetActive(false);
 
         CreateJudgeButtons();
         SetPanel();
-        SetJudgeControls();
-        Next();
     }
-    
+
 
     void Update()
     {
@@ -84,18 +88,19 @@ public class Game : MonoBehaviour
         }
         else if (old_timer > 0 && _timer <= 0)
         {
-            Check();
+            if (((_step_no % 3) == 2))
+            {
+                Next();
+            }
+            else if (((_step_no % 3) == 1))
+            {
+                Check();
+            }
         }
         else
         {
             _timeMeter.transform.localScale = Vector3.one;
         }
-
-        // Judging part (auto-end)
-        // if (PositiveVotes == 0 && NegativeVotes == 0 && !Narrator)
-        // { 
-        //    Next();
-        // }
 
         // Game control
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -109,20 +114,60 @@ public class Game : MonoBehaviour
         var prefab = Resources.Load("Judger");
         foreach (int i in Enumerable.Range(0, StaticData.players - 1))
         {
+            if (i > 9)
+            {
+                // To fix this, change the way the judger obtain its ID (currently from its Name)
+                throw new System.IndexOutOfRangeException("Max 10 players allowed. More would break the code.");
+            }
             GameObject new_judger = Instantiate(prefab) as GameObject;
-            new_judger.name = "Judger" + (StaticData.players - 1 - i);
-            new_judger.transform.position = new Vector3(0, -100 -80 * (StaticData.players - 1 - i), 0);
+            new_judger.name = "Judger" + (i);
+            new_judger.transform.position = new Vector3(0, -100 - 80 * (i + 1), 0);
             new_judger.transform.SetParent(_judgePanel.transform, false);
-            _judgers.Insert(0, new_judger);
+            _judgers.Add(new_judger);
         }
     }
 
     void SetPanel()
     {
-        _narratorPanel.SetActive(Narrator);
-        _judgePanel.SetActive(!Narrator);
-        _timer = Narrator && !FirstPlayer && !LastPlayer ? StaticData.Seconds : 0;
-        // _role.GetComponent<Text>().text = Narrator ? "speak" : "vote";
+        switch (_step_no % 3)
+        {
+            case 0:
+                _timer = 0;
+                _switchPanel.SetActive(false);
+                if (RoundNo == 0)
+                {
+                    _namesPanel.SetActive(true);
+                    SetNamesList();
+                }
+                else
+                {
+                    _judgePanel.SetActive(true);
+                    SetPlayerName();
+                    SetJudgeControls();
+                }
+                break;
+            case 1:
+                _namesPanel.SetActive(false);
+                _judgePanel.SetActive(false);
+                _speakerPanel.SetActive(true);
+
+                _timer = !FirstPlayer && !LastPlayer ? StaticData.Seconds : 0;
+                _cross.SetActive(!FirstPlayer && !LastPlayer);
+                SetPlayerName();
+                SetText();
+                break;
+            case 2:
+                _speakerPanel.SetActive(false);
+                _switchPanel.SetActive(true);
+
+                _timer = PASS_TIME;
+                break;
+        }
+    }
+
+    void SetNamesList()
+    {
+
     }
 
     void SetJudgeControls()
@@ -132,24 +177,17 @@ public class Game : MonoBehaviour
         foreach (GameObject judger in _judgers)
         {
             Text current_text = judger.transform.FindChild("Word").FindChild("Text").GetComponent<Text>();
-            if (RoundNo == 0)
+            judger.SetActive(true);
+            bool to_judge = _history[--tested_round].accepted;
+            if (to_judge)
             {
-                judger.SetActive(false);
+                active_count++;
+                current_text.text = _history[tested_round].text;
             }
             else
             {
-                judger.SetActive(true);
-                bool to_judge = _history[--tested_round].accepted;
-                if (to_judge)
-                {
-                    active_count++;
-                    current_text.text = _history[tested_round].text;
-                }
-                else
-                {
-                    current_text.text = "skipped";
-                    judger.GetComponent<Judger>().Disable();
-                }
+                current_text.text = "skipped";
+                judger.GetComponent<Judger>().Disable();
             }
         }
         PositiveVotes = Mathf.Min(active_count, StaticData.players / 2);
@@ -167,7 +205,7 @@ public class Game : MonoBehaviour
     {
         if (FirstPlayer) // First word
         {
-            _newWord.GetComponent<Text>().text = "Let me tell the story how\n" + _words.GetWord(true) + "...";
+            _newWord.GetComponent<Text>().text = "The story how\n" + _words.GetWord(true) + "...";
         }
         else if (LastPlayer)
         { // Last round, last player.
@@ -187,25 +225,16 @@ public class Game : MonoBehaviour
         _usedWords.GetComponent<Text>().text = GetStoryText();
     }
 
-    void Next()
+    public void Next()
     {
         _step_no++;
         if (RoundNo >= StaticData.rounds)
         {
             Finish();
         }
-        else if (Narrator)
-        {
-            SetPanel();
-            _cross.SetActive(!FirstPlayer && !LastPlayer);
-            SetText();
-        }
         else
         {
             SetPanel();
-            // SetIconColor();
-            SetPlayerName();
-            SetJudgeControls();
         }
         SetPageNumber();
     }
@@ -233,26 +262,11 @@ public class Game : MonoBehaviour
         return text.Replace("\n", " ");
     }
 
-    /*void SetIconColor()
-    {
-        if (_last_score[PlayerNo] > 0)
-        {
-            _icon.GetComponent<Image>().color = new Color(0f, 0.5f, 0f);
-        }
-        else if (_last_score[PlayerNo] == 0)
-        {
-            _icon.GetComponent<Image>().color = new Color(0.5f, 0.3f, 0f);
-        }
-        else
-        {
-            _icon.GetComponent<Image>().color = new Color(0.5f, 0f, 0f);
-        }
-        _last_score[PlayerNo] = 0;
-    }*/
-
     void SetPlayerName()
     {
-        _name1.GetComponent<Text>().text = _name2.GetComponent<Text>().text = StaticData.names[PlayerNo];
+        string currentName = StaticData.names[PlayerNo];
+        _instructionsSpeaker.GetComponent<Text>().text = GlobalMethods.ReplaceName(_instructionsSpeaker.GetComponent<Text>().text, currentName);
+        _instructionsJudge.GetComponent<Text>().text = GlobalMethods.ReplaceName(_instructionsJudge.GetComponent<Text>().text, currentName);
     }
 
     public void Check()
@@ -269,10 +283,11 @@ public class Game : MonoBehaviour
 
     public void Speak()
     {
-        if (PositiveVotes == 0 && NegativeVotes == 0 && !Narrator)
+        if (PositiveVotes == 0 && NegativeVotes == 0)
         {
             for (int i = 0; i < _judgers.Count; i++)
             {
+                // The player that spoke the earliest is the successor of the curent player
                 int affected_player = (PlayerNo + i + 1) % StaticData.players;
                 _last_score[affected_player] += _judgers[i].GetComponent<Judger>().GetScore();
                 StaticData.score[affected_player] += _judgers[i].GetComponent<Judger>().GetScore();
