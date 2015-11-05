@@ -28,7 +28,10 @@ public class NamesPanel : MonoBehaviour {
         {
             GameObject new_name_obj = Instantiate(_name_prefab) as GameObject;
             new_name_obj.name = name;
-            new_name_obj.GetComponent<Text>().text = name;
+            new_name_obj.transform.FindChild("Name Text").gameObject.GetComponent<Text>().text = name;
+#if UNITY_ANDROID 
+            new_name_obj.transform.localScale = Vector3.one * 2;
+#endif
             new_name_obj.transform.parent = _namesList.transform;
             new_name_obj.SetActive(true);
         }
