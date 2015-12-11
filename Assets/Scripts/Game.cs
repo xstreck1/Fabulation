@@ -28,8 +28,8 @@ public class Game : MonoBehaviour
     public GameObject _cross;
     public GameObject _timeMeter;
     public GameObject _pageNumber;
-    public GameObject _negative;
-    public GameObject _positive;
+    public GameObject _votes;
+    public GameObject _speak;
 
 #if UNITY_EDITOR
     readonly float PASS_TIME = 0.1f;
@@ -46,8 +46,7 @@ public class Game : MonoBehaviour
     public int RoundNo { get { return _step_no / (PHASE_COUNT * StaticData.players); } }
     bool FirstPlayer { get { return _step_no / PHASE_COUNT == 0; } }
     bool LastPlayer { get { return RoundNo + 1 >= StaticData.rounds && PlayerNo == StaticData.players - 1; } }
-    public int PositiveVotes { get; private set; }
-    public int NegativeVotes { get; private set; }
+    int VotesAvailable { get; set; }
 
     List<UsedWord> _history;
     List<bool> _accepted;
@@ -121,8 +120,9 @@ public class Game : MonoBehaviour
             }
             GameObject new_judger = Instantiate(prefab) as GameObject;
             new_judger.name = "Judger" + (i);
-            new_judger.transform.position = new Vector3(0, -100 - 80 * (i + 1), 0);
+            new_judger.transform.position = new Vector3(0, -100 - 80 * i, 0);
             new_judger.transform.SetParent(_judgePanel.transform, false);
+            new_judger.GetComponent<Toggle>().onValueChanged.AddListener((value) => JudgeClick(value));
             _judgers.Add(new_judger);
         }
     }
@@ -172,13 +172,13 @@ public class Game : MonoBehaviour
 
     void SetJudgeControls()
     {
-        int tested_round = _step_no / PHASE_COUNT;
+        int tested_round = _step_no / PHASE_COUNT - StaticData.players + 1;
         int active_count = 0;
         foreach (GameObject judger in _judgers)
         {
             Text current_text = judger.transform.FindChild("Word").FindChild("Text").GetComponent<Text>();
             judger.SetActive(true);
-            bool to_judge = _history[--tested_round].accepted;
+            bool to_judge = _history[tested_round].accepted;
             if (to_judge)
             {
                 active_count++;
@@ -187,18 +187,28 @@ public class Game : MonoBehaviour
             else
             {
                 current_text.text = "skipped";
-                judger.GetComponent<Judger>().Disable();
             }
+            tested_round++;
         }
-        PositiveVotes = Mathf.Min(active_count, StaticData.players / 2);
-        NegativeVotes = active_count - PositiveVotes;
-        SetVoteNumbers();
+        VotesAvailable = Mathf.Min(active_count, StaticData.players / 2);
+        SetVoteNumbers(VotesAvailable);
     }
 
-    void SetVoteNumbers()
+    void SetVoteNumbers(int remaining)
     {
-        _positive.GetComponent<Text>().text = PositiveVotes.ToString();
-        _negative.GetComponent<Text>().text = NegativeVotes.ToString();
+        // TODO set bottom
+        if (remaining > 0)
+        {
+            _speak.SetActive(false);
+            _votes.SetActive(true);
+            string vote_word = remaining == 1 ? " VOTE " : " VOTES ";
+            _votes.GetComponent<Text>().text = remaining.ToString() + vote_word + "REMAINING";
+        }
+        else
+        {
+            _speak.SetActive(true);
+            _votes.SetActive(false);
+        }
     }
 
     void SetText()
@@ -283,24 +293,35 @@ public class Game : MonoBehaviour
 
     public void Speak()
     {
-        if (PositiveVotes == 0 && NegativeVotes == 0)
+        for (int i = 0; i < _judgers.Count; i++)
         {
-            for (int i = 0; i < _judgers.Count; i++)
+            // The player that spoke the earliest is the successor of the curent player
+            int affected_player = (PlayerNo + i + 1) % StaticData.players;
+            // TODO count score
+            if (_judgers[i].transform.FindChild("Word").FindChild("Text").GetComponent<Text>().text != "skipped")
             {
-                // The player that spoke the earliest is the successor of the curent player
-                int affected_player = (PlayerNo + i + 1) % StaticData.players;
-                _last_score[affected_player] += _judgers[i].GetComponent<Judger>().GetScore();
-                StaticData.score[affected_player] += _judgers[i].GetComponent<Judger>().GetScore();
+                Toggle toggle = _judgers[i].GetComponent<Toggle>();
+                _last_score[affected_player] += toggle.isOn ? 1 : -1;
+                StaticData.score[affected_player] += toggle.isOn ? 1 : -1;
+                toggle.enabled = true;
+                toggle.isOn = false;
             }
-            Next();
         }
+        Next();
     }
 
-    public void JudgeClick(int pos_change, int neg_change)
+    public void JudgeClick(bool on)
     {
-        PositiveVotes += pos_change;
-        NegativeVotes += neg_change;
-        SetVoteNumbers();
+        int remaining = VotesAvailable - _judgers.Sum(j => j.GetComponent<Toggle>().isOn ? 1 : 0);
+        if (on && remaining == 0)
+        {
+            _judgers.ForEach(j => j.GetComponent<Toggle>().enabled = j.GetComponent<Toggle>().isOn); // Disable those not on
+        }
+        else if (!on && remaining == 1)
+        {
+            _judgers.ForEach(j => j.GetComponent<Toggle>().enabled = true);
+        }
+        SetVoteNumbers(remaining);
     }
 
     public void Finish()

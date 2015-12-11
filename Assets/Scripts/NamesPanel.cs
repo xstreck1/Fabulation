@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class NamesPanel : MonoBehaviour {
     public GameObject _namesList;
+    public GameObject _speak;
+    public GameObject _text;
     Text _instructionsText;
     Game _game;
     
@@ -29,7 +31,7 @@ public class NamesPanel : MonoBehaviour {
             GameObject new_name_obj = Instantiate(_name_prefab) as GameObject;
             new_name_obj.name = name;
             new_name_obj.transform.FindChild("Name Text").gameObject.GetComponent<Text>().text = name;
-#if UNITY_ANDROID 
+#if UNITY_ANDROID && !UNITY_EDITOR
             new_name_obj.transform.localScale = Vector3.one * 2;
 #endif
             new_name_obj.transform.parent = _namesList.transform;
@@ -40,11 +42,15 @@ public class NamesPanel : MonoBehaviour {
     void OnEnable()
     {
         NameSelected("");
+        _speak.SetActive(false);
+        _text.SetActive(true);
     }
 
     public void NameSelected(string new_name) {
         SelectedName = new_name;
         _instructionsText.text = GlobalMethods.ReplaceName(_instructionsText.text, new_name);
+        _speak.SetActive(true);
+        _text.SetActive(false);
     }
 
     public void PlayClick()
