@@ -25,7 +25,6 @@ public class Game : MonoBehaviour
     public GameObject _usedWords;
     public GameObject _textPad;
     public GameObject _check;
-    public GameObject _cross;
     public GameObject _timeMeter;
     public GameObject _pageNumber;
     public GameObject _votes;
@@ -37,6 +36,7 @@ public class Game : MonoBehaviour
     readonly float PASS_TIME = 1.5f;
 #endif
     readonly int PHASE_COUNT = 3; // Three phases per player
+    readonly float BUTTON_BLOCK = 2; // A second timeout for the button
 
     Words _words;
     float _timer;
@@ -82,8 +82,8 @@ public class Game : MonoBehaviour
         _timer -= Time.deltaTime;
         if (_timer > 0)
         {
-            float fill = (StaticData.Seconds - _timer) / StaticData.Seconds;
-            _timeMeter.transform.localScale = new Vector3(fill, 1f, 1f);
+            float progress = (StaticData.Seconds - _timer) / StaticData.Seconds;
+            _timeMeter.transform.localScale = new Vector3(progress, 1f, 1f);
         }
         else if (old_timer > 0 && _timer <= 0)
         {
@@ -152,7 +152,6 @@ public class Game : MonoBehaviour
                 _speakerPanel.SetActive(true);
 
                 _timer = !FirstPlayer && !LastPlayer ? StaticData.Seconds : 0;
-                _cross.SetActive(!FirstPlayer && !LastPlayer);
                 SetPlayerName();
                 SetText();
                 break;
@@ -281,15 +280,13 @@ public class Game : MonoBehaviour
 
     public void Check()
     {
-        Finished(true);
-        Next();
+        if (StaticData.Seconds - _timer > BUTTON_BLOCK)
+        {
+            Finished(true);
+            Next();
+        }
     }
 
-    public void Cross()
-    {
-        Finished(false);
-        Next();
-    }
 
     public void Speak()
     {

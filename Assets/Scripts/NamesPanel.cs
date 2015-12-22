@@ -34,7 +34,7 @@ public class NamesPanel : MonoBehaviour {
 #if UNITY_ANDROID && !UNITY_EDITOR
             new_name_obj.transform.localScale = Vector3.one * 2;
 #endif
-            new_name_obj.transform.parent = _namesList.transform;
+            new_name_obj.transform.SetParent(_namesList.transform);
             new_name_obj.SetActive(true);
         }
     }
