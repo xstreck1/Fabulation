@@ -3,11 +3,11 @@ using System.Collections;
 using UnityEngine.UI;
 
 public class Name : MonoBehaviour {
-    NamesPanel _namesPanel;
+    Names _namesPanel;
     
 	// Use this for initialization
 	void Start () {
-        _namesPanel = GameObject.Find("Names Panel").GetComponent<NamesPanel>();
+        _namesPanel = GameObject.Find("Canvas").GetComponent<Names>();
         GetComponent<Button>().onClick.AddListener(() => ChangeName());
 	}
 	
@@ -18,6 +18,6 @@ public class Name : MonoBehaviour {
 
     void ChangeName()
     {
-        _namesPanel.GetComponent<NamesPanel>().NameSelected(name);
+        _namesPanel.GetComponent<Names>().NameSelected(name);
     }
 }

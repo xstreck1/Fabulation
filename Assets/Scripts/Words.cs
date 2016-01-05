@@ -9,11 +9,11 @@ public class Words {
 
     public Words()
     {
-        foreach (var word_list in StaticData.word_lists.Where(x => StaticData.used_lists[x.Key] == true))
+        foreach (var word_list in Settings.word_lists.Where(x => Settings.used_lists[x.Key] == true))
         {
             _word_list.InsertRange(0, word_list.Value);
         }
-        foreach (var connective_list in StaticData.connectives_lists)
+        foreach (var connective_list in Settings.connectives_lists)
         {
             _connectives.InsertRange(0, connective_list.Value);
         }
@@ -21,7 +21,7 @@ public class Words {
         {
             throw new System.ArgumentException("No nouns for the current game.");
         }
-        _names.InsertRange(0, StaticData.names_list);
+        _names.InsertRange(0, Settings.names_list);
     }
 
     /// <summary>

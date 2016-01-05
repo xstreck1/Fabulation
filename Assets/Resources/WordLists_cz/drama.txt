@@ -1,0 +1,36 @@
+Nehoda
+Alkohol
+Advokát
+Dítě
+Buňka
+Cigareta
+Zločinec
+Soud
+Smrt
+Deprese
+Rozvod
+Pohřeb
+Hlad
+Nemoc
+Infekce
+Zákon
+Ochrana
+Vězení
+Soudce
+Zbraň
+Násilí
+Voják
+Šepot
+Vdova
+Žízeň
+Past
+#verbs
+rozbít
+hořet
+pít
+utopit se
+zranit
+zabít
+křičet
+na stonku
+přežít

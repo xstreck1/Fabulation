@@ -2,7 +2,7 @@
 using System.Linq;
 using UnityEngine;
 
-public static class StaticData
+public static class Settings
 {
     private const string _LISTS_FOLDER = "WordLists";
 
@@ -23,8 +23,6 @@ public static class StaticData
     static public Dictionary<string, List<string>> connectives_lists = new Dictionary<string, List<string>>();
     static public List<string> names_list = new List<string>();
     static public Dictionary<string, bool> used_lists = new Dictionary<string, bool>();
-    static public List<int> score = new List<int>();
-    static public List<string> names = new List<string>();
 
     static public string story;
     static public bool simple = true;
@@ -59,7 +57,14 @@ public static class StaticData
         }
     }
 
-    static StaticData()
+    public static int VotesAvailable {
+        get
+        {
+            return players / 2;
+        }
+    }
+
+    static Settings()
     {
         // Keep awake
         Screen.sleepTimeout = SleepTimeout.NeverSleep;
@@ -83,13 +88,5 @@ public static class StaticData
         
         names_list = (Resources.Load("names") as TextAsset).text.Split(new string[] { "\r\n", "\n" }, System.StringSplitOptions.None).ToList<string>();
         names_list.RemoveAll(x => x.Length == 0 || x[0] == '#'); // Remove all the lines that start with #
-
-        ResetScore();
-    }
-
-    static public void ResetScore()
-    {
-        score = Enumerable.Repeat(0, players).ToList();
-        names = Enumerable.Repeat("", players).ToList();
     }
 }

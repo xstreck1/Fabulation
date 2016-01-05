@@ -26,18 +26,18 @@ public class Score : MonoBehaviour {
     public void SetResults()
     {
         List<string> winners = new List<string>();
-        int max_score = StaticData.score.Max();
-        for (int i = 0; i < StaticData.players; i++)
+        int max_score = GameData.score.Max();
+        for (int i = 0; i < Settings.players; i++)
         {
-            if (StaticData.score[i] == max_score)
+            if (GameData.score[i] == max_score)
             {
-                winners.Add(StaticData.names[i]);
+                winners.Add(GameData.names[i]);
             }
         }
         string winner = winners.ElementAt(UnityEngine.Random.Range(0, winners.Count()));
         _author_name.text = winner;
 
-        _story_text.text = StaticData.story;
+        _story_text.text = Settings.story;
     }
 
     public void FinishGame()

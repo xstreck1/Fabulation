@@ -20,7 +20,7 @@ public class GenreToggle : MonoBehaviour {
     // Add or remove the dictionary from the list in static data
     public void SetDictionary(bool value)
     {
-        StaticData.used_lists[_toggle.name] = value;
-        PlayerPrefs.SetInt(_toggle.name, Convert.ToInt32(StaticData.used_lists[_toggle.name]));
+        Settings.used_lists[_toggle.name] = value;
+        PlayerPrefs.SetInt(_toggle.name, Convert.ToInt32(Settings.used_lists[_toggle.name]));
     }
 }

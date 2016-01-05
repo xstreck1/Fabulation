@@ -14,13 +14,13 @@ public class ModeSwitch : MonoBehaviour {
 
     public void Click()
     {
-        StaticData.simple = !StaticData.simple;
+        Settings.simple = !Settings.simple;
         SetValue();
     }
 
     // 
     void SetValue()
     {
-        _button_text.GetComponent<Text>().text = StaticData.simple ? "simple" : "advanced";
+        _button_text.GetComponent<Text>().text = Settings.simple ? "simple" : "advanced";
     }
 }

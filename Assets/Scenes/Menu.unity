@@ -191,11 +191,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22484062, guid: 010bdf8e705e8ee41893c58364ac76ec, type: 2}
       propertyPath: m_Pivot.x
-      value: .5
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 22484062, guid: 010bdf8e705e8ee41893c58364ac76ec, type: 2}
       propertyPath: m_Pivot.y
-      value: .5
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 22474796, guid: 010bdf8e705e8ee41893c58364ac76ec, type: 2}
       propertyPath: m_AnchorMax.x
@@ -472,11 +472,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22484062, guid: 010bdf8e705e8ee41893c58364ac76ec, type: 2}
       propertyPath: m_Pivot.x
-      value: .5
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 22484062, guid: 010bdf8e705e8ee41893c58364ac76ec, type: 2}
       propertyPath: m_Pivot.y
-      value: .5
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 141470, guid: 010bdf8e705e8ee41893c58364ac76ec, type: 2}
       propertyPath: m_Name
@@ -1725,11 +1725,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22484062, guid: 010bdf8e705e8ee41893c58364ac76ec, type: 2}
       propertyPath: m_Pivot.x
-      value: .5
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 22484062, guid: 010bdf8e705e8ee41893c58364ac76ec, type: 2}
       propertyPath: m_Pivot.y
-      value: .5
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 22474796, guid: 010bdf8e705e8ee41893c58364ac76ec, type: 2}
       propertyPath: m_AnchorMax.x

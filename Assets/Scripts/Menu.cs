@@ -5,7 +5,7 @@ public class Menu : MonoBehaviour
 {
     public void StartGame()
     {
-        Application.LoadLevel("Genres");
+        Application.LoadLevel("Instructions");
     }
 
     public void Update()

@@ -10,15 +10,16 @@ public class Genres : MonoBehaviour {
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            Application.LoadLevel("Menu");
+            Application.LoadLevel("Instructions");
         }
     }
 
     void StartGame()
     {
-        if (StaticData.used_lists.Count(x => x.Value == true) > 0)
+        if (Settings.used_lists.Count(x => x.Value == true) > 0)
         {
-            Application.LoadLevel("Game");
+            GameData.Reset();
+            Application.LoadLevel("Names");
         }
         else
         {

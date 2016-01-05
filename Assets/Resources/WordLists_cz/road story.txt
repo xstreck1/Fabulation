@@ -1,0 +1,40 @@
+Rezervovat
+Pták
+Chlapec
+Kočka
+Dítě
+Židle
+Město
+Pes
+Dveře
+Napít se
+Ryba
+Jídlo
+Les
+Patro
+Dívka
+Dům
+Pracovní místo
+Silnice
+Pokoj
+Střecha
+Škola
+Moře
+Příběh
+Muž
+Myš
+Hora
+Tabulka
+Vesnice
+Voda
+Žena
+Okno
+#verbs
+jíst
+cestovat
+stopovat
+pamatovat si
+hovořit
+navštívit
+spát
+#adjectives

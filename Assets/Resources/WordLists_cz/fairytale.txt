@@ -1,0 +1,41 @@
+Vařit
+Bratr
+hrad
+Kouzlo
+Prokletí
+Dcera
+Oblékat se
+Kmotra
+Obří
+Otec
+Chata
+Král
+Království
+Legenda
+Matka
+Majestát
+Zázrak
+Sova
+Skřítek
+Lektvar
+Princ
+Princezna
+Prorok
+Panování
+Pravidlo
+Sestra
+Syn
+Strom
+Věž
+Vesnice
+Královna
+Jednorožec
+Čarodějnice
+Přání
+#verbs
+do boje
+proklít
+tancovat
+políbit
+zachránit
+oženit se
