@@ -4,12 +4,16 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 
 public class Names : MonoBehaviour {
+    public GameObject _button;
+    public GameObject _requirement;
     public GameObject _namesList;
-    public GameObject _speak;
-    public GameObject _text;
-    Text _instructionsText;
+    public GameObject _nameInput;
+
+    Text _name_input_text;
     
     Object _name_prefab;
+    bool _own_name = false;
+
     public string SelectedName 
     {
         get; private set;
@@ -17,7 +21,6 @@ public class Names : MonoBehaviour {
 
     void Awake()
     {
-        _instructionsText = transform.Find("Instructions/Instructions Text").GetComponent<Text>();
         _name_prefab = Resources.Load("Name");
     }
     
@@ -38,27 +41,39 @@ public class Names : MonoBehaviour {
                 new_name_obj.SetActive(true);
             }
         }
+        _name_input_text = _nameInput.transform.FindChild("Text").GetComponent<Text>();
     }
 
-    void OnEnable()
+    void Update()
     {
-        NameSelected("");
-        _speak.SetActive(false);
-        _text.SetActive(true);
-    }
-
-    public void NameSelected(string new_name) {
-        SelectedName = new_name;
-        _instructionsText.text = GlobalMethods.ReplaceName(_instructionsText.text, new_name);
-        _speak.SetActive(true);
-        _text.SetActive(false);
-    }
-
-    public void PlayClick()
-    {
-        if (SelectedName != "")
+        if (_own_name)
         {
-            GameData.names[GameData.PlayerNo] = SelectedName;
+            bool has_name = _name_input_text.text != "";
+            _requirement.SetActive(!has_name);
+            _button.SetActive(has_name);
+        }
+    }
+
+    public void NameSelected(string new_name)
+    {
+        GameData.names[GameData.PlayerNo] = SelectedName;
+        GameData.Next();
+    }
+
+    public void Button()
+    {
+        if (!_own_name)
+        {
+            _nameInput.SetActive(true);
+            _namesList.SetActive(false);
+            _requirement.SetActive(true);
+            _button.SetActive(false);
+            _button.transform.FindChild("Text").GetComponent<Text>().text = "that is my name";
+            _own_name = true;
+        }
+        else
+        {
+            GameData.names[GameData.PlayerNo] = _name_input_text.text;
             GameData.Next();
         }
     }

@@ -151,7 +151,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: GOT IT
+  m_Text: got it
 --- !u!222 &377867281
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -218,21 +218,19 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 0
     m_MaxSize: 270
-    m_Alignment: 1
+    m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: '
-
-    This is a storytelling game.
+  m_Text: 'This is a storytelling game.
 
 
     Each round you are given a sentence with empty parts, symbolized by "...".
 
 
-    Your task is to make up a part of a story by filling the "..." under a time limit.
+    Your task is to make up a part of a story by filling the "..." in a time limit.
 
 
     After that you pass on the device.
@@ -246,9 +244,7 @@ MonoBehaviour:
 
 
     After the last round, the player who got the most points becomes the author of
-    the story.
-
-'
+    the story.'
 --- !u!222 &639294705
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -596,8 +592,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: StartGame
+      - m_Target: {fileID: 926382133}
+        m_MethodName: GotIt
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

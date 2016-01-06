@@ -309,7 +309,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: I am ready to speak
+  m_Text: i have decided
 --- !u!222 &594047231
 CanvasRenderer:
   m_ObjectHideFlags: 0
