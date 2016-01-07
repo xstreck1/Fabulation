@@ -37,7 +37,7 @@ public class Score : MonoBehaviour {
         string winner = winners.ElementAt(UnityEngine.Random.Range(0, winners.Count()));
         _author_name.text = winner;
 
-        _story_text.text = Settings.story;
+        _story_text.text = GameData.GetStoryText();
     }
 
     public void FinishGame()

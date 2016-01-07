@@ -5,6 +5,7 @@ using UnityEngine;
 public static class Settings
 {
     private const string _LISTS_FOLDER = "WordLists";
+    public const string _names_key = "names";
 
     static public readonly Color[] colors = {
         new Color(1,0,0),
@@ -23,8 +24,7 @@ public static class Settings
     static public Dictionary<string, List<string>> connectives_lists = new Dictionary<string, List<string>>();
     static public List<string> names_list = new List<string>();
     static public Dictionary<string, bool> used_lists = new Dictionary<string, bool>();
-
-    static public string story;
+    
     static public bool simple = true;
     static public int players = 3;
     static public int rounds = 3;
@@ -34,18 +34,22 @@ public static class Settings
         {
             switch (seconds) {
                 case 1:
-                    return 10;
+                    return 5;
                 case 2:
-                    return 20;
+                    return 10;
                 case 3:
-                    return 30;
+                    return 15;
                 case 4:
-                    return 45;
+                    return 20;
                 case 5:
-                    return 60;
+                    return 30;
                 case 6:
-                    return 90;
+                    return 45;
                 case 7:
+                    return 60;
+                case 8:
+                    return 90;
+                case 9:
                     return 120;
                 default:
                     return 0;

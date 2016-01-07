@@ -12,6 +12,7 @@ public class Speaker : MonoBehaviour
     public GameObject _usedWords;
     public GameObject _textPad;
     public GameObject _pageNumber;
+    public GameObject _confirmPanel;
 
 #if UNITY_EDITOR 
     readonly float BUTTON_BLOCK = 0.1f; // A timeout for the button not to be pressed hastily 
@@ -32,19 +33,22 @@ public class Speaker : MonoBehaviour
 
     void Update()
     {
+        if (_confirmPanel.activeSelf)
+        {
+            return;
+        }
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            _confirmPanel.SetActive(true);
+        }
+
         // Timing related progress
         float old_timer = Timer;
         Timer -= Time.deltaTime;
 
-         if (old_timer > 0 && Timer <= 0)
+        if (old_timer > 0 && Timer <= 0)
         {
             Check();
-        }
-
-        // Game control
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            Application.LoadLevel("Menu");
         }
     }
    
@@ -69,23 +73,13 @@ public class Speaker : MonoBehaviour
                 _newWord.GetComponent<Text>().text = ", " + GameData.words.GetConnective() + "...\n" + GameData.words.GetWord(true) + "...";
             }
         }
-        _usedWords.GetComponent<Text>().text = GetStoryText();
+        _usedWords.GetComponent<Text>().text = GameData.GetStoryText();
     }
 
 
     void SetPageNumber()
     {
         _pageNumber.GetComponent<Text>().text = (GameData.RoundNo * Settings.players + GameData.PlayerNo + 1) + "/" + (Settings.players * Settings.rounds);
-    }
-
-    string GetStoryText()
-    {
-        string text = "";
-        foreach (UsedWord word in GameData.history)
-        {
-            text += word.text;
-        }
-        return text.Replace("\n", " ");
     }
 
     void SetPlayerName()

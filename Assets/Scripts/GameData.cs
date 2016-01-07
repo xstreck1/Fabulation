@@ -80,4 +80,14 @@ public static class GameData
                 break;
         }
     }
+
+    public static string GetStoryText()
+    {
+        string text = "";
+        foreach (UsedWord word in GameData.history)
+        {
+            text += word.text;
+        }
+        return text.Replace("\n", " ");
+    }
 }

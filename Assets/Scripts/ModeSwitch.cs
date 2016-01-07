@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class ModeSwitch : MonoBehaviour {
     public GameObject _button_text;
+    public GameObject _label_text;
 
     // Read from the player prefs whether the dictionary has been chosen
     void Start()
@@ -21,6 +22,7 @@ public class ModeSwitch : MonoBehaviour {
     // 
     void SetValue()
     {
-        _button_text.GetComponent<Text>().text = Settings.simple ? "simple" : "advanced";
+        _label_text.GetComponent<Text>().text = Settings.simple ? "simple mode" : "advanced mode";
+        _button_text.GetComponent<Text>().text = Settings.simple ? "switch to advanced" : "switch to simple";
     }
 }

@@ -12,6 +12,7 @@ public class Judge : MonoBehaviour
     public GameObject _votes;
     public GameObject _votesText;
     public GameObject _speak;
+    public GameObject _confirmPanel;
 
     List<GameObject> _judgers;
 
@@ -33,10 +34,13 @@ public class Judge : MonoBehaviour
 
     void Update()
     {
-        // Game control
+        if (_confirmPanel.activeSelf)
+        {
+            return;
+        }
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            Application.LoadLevel("Menu");
+            _confirmPanel.SetActive(true);
         }
     }
 
@@ -53,7 +57,7 @@ public class Judge : MonoBehaviour
             GameObject new_judger = Instantiate(prefab) as GameObject;
             new_judger.name = "Judger" + (i);
             new_judger.GetComponent<RectTransform>().position = new Vector3(0, -100 - 80 * i, 0);
-            new_judger.transform.SetParent(transform, false);
+            new_judger.transform.SetParent(transform.FindChild("Judgers"), false);
             new_judger.GetComponent<Toggle>().onValueChanged.AddListener((value) => JudgeClick(value));
             Text juger_text = new_judger.transform.FindChild("Word").FindChild("Text").GetComponent<Text>();
             // order the last (Settings.players - 1) words such that the one used the lates is on the bottom
@@ -104,12 +108,10 @@ public class Judge : MonoBehaviour
             // The player that spoke the earliest is the successor of the curent player
             int affected_player = (GameData.PlayerNo + i + 1) % Settings.players;
 
-            if (_judgers[i].transform.FindChild("Word").FindChild("Text").GetComponent<Text>().text != "skipped")
+            Toggle toggle = _judgers[i].GetComponent<Toggle>();
+            if (toggle.isOn)
             {
-                Toggle toggle = _judgers[i].GetComponent<Toggle>();
-                GameData.score[affected_player] += toggle.isOn ? 1 : -1;
-                toggle.enabled = true;
-                toggle.isOn = false;
+                GameData.score[affected_player]++;
             }
         }
         GameData.Next();
