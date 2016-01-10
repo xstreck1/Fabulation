@@ -159,7 +159,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22484062, guid: 010bdf8e705e8ee41893c58364ac76ec, type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 269.9674
+      value: 269.835
       objectReference: {fileID: 0}
     - target: {fileID: 22484062, guid: 010bdf8e705e8ee41893c58364ac76ec, type: 2}
       propertyPath: m_AnchoredPosition.y
@@ -167,7 +167,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22484062, guid: 010bdf8e705e8ee41893c58364ac76ec, type: 2}
       propertyPath: m_SizeDelta.x
-      value: 519.9348
+      value: 519.67
       objectReference: {fileID: 0}
     - target: {fileID: 22484062, guid: 010bdf8e705e8ee41893c58364ac76ec, type: 2}
       propertyPath: m_SizeDelta.y
@@ -440,7 +440,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22484062, guid: 010bdf8e705e8ee41893c58364ac76ec, type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 269.9674
+      value: 269.835
       objectReference: {fileID: 0}
     - target: {fileID: 22484062, guid: 010bdf8e705e8ee41893c58364ac76ec, type: 2}
       propertyPath: m_AnchoredPosition.y
@@ -448,7 +448,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22484062, guid: 010bdf8e705e8ee41893c58364ac76ec, type: 2}
       propertyPath: m_SizeDelta.x
-      value: 519.9348
+      value: 519.67
       objectReference: {fileID: 0}
     - target: {fileID: 22484062, guid: 010bdf8e705e8ee41893c58364ac76ec, type: 2}
       propertyPath: m_SizeDelta.y
@@ -1586,7 +1586,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: simple
+  m_Text: switch text
 --- !u!222 &1426296814
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1707,7 +1707,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22484062, guid: 010bdf8e705e8ee41893c58364ac76ec, type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 269.9674
+      value: 269.835
       objectReference: {fileID: 0}
     - target: {fileID: 22484062, guid: 010bdf8e705e8ee41893c58364ac76ec, type: 2}
       propertyPath: m_AnchoredPosition.y
@@ -1715,7 +1715,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22484062, guid: 010bdf8e705e8ee41893c58364ac76ec, type: 2}
       propertyPath: m_SizeDelta.x
-      value: 519.9348
+      value: 519.67
       objectReference: {fileID: 0}
     - target: {fileID: 22484062, guid: 010bdf8e705e8ee41893c58364ac76ec, type: 2}
       propertyPath: m_SizeDelta.y
@@ -2500,8 +2500,8 @@ RectTransform:
   m_RootOrder: 0
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 25, y: -15}
-  m_SizeDelta: {x: -50, y: -30}
+  m_AnchoredPosition: {x: 20, y: -20}
+  m_SizeDelta: {x: -40, y: -40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1958632060
 MonoBehaviour:
@@ -2528,14 +2528,14 @@ MonoBehaviour:
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 10
-    m_MaxSize: 100
+    m_MaxSize: 300
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Let me tell a story...
+  m_Text: Fabulation
 --- !u!222 &1958632061
 CanvasRenderer:
   m_ObjectHideFlags: 0
