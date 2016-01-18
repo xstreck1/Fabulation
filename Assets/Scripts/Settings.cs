@@ -2,9 +2,13 @@
 using System.Linq;
 using UnityEngine;
 
+
 public static class Settings
 {
-    private const string _LISTS_FOLDER = "WordLists";
+    public const string LANGUAGE = "ENGLISH";
+
+    private const string _LISTS_FOLDER = LANGUAGE == "CZ" ? "WordLists_cz" : "WordLists";
+
     public const string _names_key = "names";
 
     static public readonly Color[] colors = {

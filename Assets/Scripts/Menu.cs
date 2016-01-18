@@ -20,4 +20,9 @@ public class Menu : MonoBehaviour
     {
         Application.Quit();
     }
+
+    public void About()
+    {
+        Application.LoadLevel("About");
+    }
 }

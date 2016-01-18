@@ -1,0 +1,1 @@
+Copy/download the file Fabulation.apk onto an Android device, open it there and press "Install". Installation from "Unknown sources" must be enabled in Settings->Security.

@@ -14,7 +14,11 @@ public class Speaker : MonoBehaviour
     public GameObject _pageNumber;
     public GameObject _confirmPanel;
 
-#if UNITY_EDITOR 
+
+    const string intro_text = Settings.LANGUAGE == "CZ" ? "Pribeh o tom jak \n" : "The Story How a \n";
+    const string conclusion_text = Settings.LANGUAGE == "CZ" ? ", ... Konec." : ", ... The End.";
+
+#if UNITY_EDITOR
     readonly float BUTTON_BLOCK = 0.1f; // A timeout for the button not to be pressed hastily 
 #else
     readonly float BUTTON_BLOCK = 1.5f;
@@ -56,11 +60,11 @@ public class Speaker : MonoBehaviour
     {
         if (GameData.FirstPlayer) // First word
         {
-            _newWord.GetComponent<Text>().text = "The Story How a \n" + GameData.words.GetWord(true) + "...";
+            _newWord.GetComponent<Text>().text = intro_text + GameData.words.GetWord(true) + "...";
         }
         else if (GameData.LastPlayer)
         { // Last round, last player.
-            _newWord.GetComponent<Text>().text = ", ... The End.";
+            _newWord.GetComponent<Text>().text = conclusion_text;
         }
         else
         {

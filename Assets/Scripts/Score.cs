@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using System.Linq;
 
 public class Score : MonoBehaviour {
+    ScrollRect _scroll_rect;
     Text _author_name;
     Text _story_text;
 
@@ -12,6 +13,7 @@ public class Score : MonoBehaviour {
     {
         _author_name = transform.FindChild("Author").FindChild("Author Text").GetComponent<Text>();
         _story_text = transform.FindChild("Story").FindChild("Story Text").GetComponent<Text>();
+        _scroll_rect = transform.FindChild("Story").GetComponent<ScrollRect>();
         SetResults();
     }
 
@@ -35,9 +37,10 @@ public class Score : MonoBehaviour {
             }
         }
         string winner = winners.ElementAt(UnityEngine.Random.Range(0, winners.Count()));
-        _author_name.text = winner;
+        _author_name.text = "by\n    " + winner;
 
         _story_text.text = GameData.GetStoryText();
+        _scroll_rect.verticalNormalizedPosition = 0;
     }
 
     public void FinishGame()

@@ -1,0 +1,15 @@
+The game is for 3-9 players (strictly multiplayer).
+
+This is a storytelling game.
+
+Each round you are given a sentence with empty parts, symbolized by "...".
+
+Your task is to make up a part of a story by filling the "..." in a time limit.
+
+After that you pass on the device.
+
+You are also allowed to change the gender of what you are given and change between singular and plural.
+
+After each round each player picks theirs favourites from the last round.
+
+After the last round, the player who got the most points becomes the author of the story.
