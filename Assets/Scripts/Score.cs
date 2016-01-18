@@ -37,10 +37,10 @@ public class Score : MonoBehaviour {
             }
         }
         string winner = winners.ElementAt(UnityEngine.Random.Range(0, winners.Count()));
-        _author_name.text = "by\n    " + winner;
+        _author_name.text = "    " + winner;
 
         _story_text.text = GameData.GetStoryText();
-        _scroll_rect.verticalNormalizedPosition = 0;
+        _scroll_rect.verticalNormalizedPosition = 1f;
     }
 
     public void FinishGame()
