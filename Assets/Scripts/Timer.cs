@@ -29,7 +29,9 @@ public class Timer : MonoBehaviour {
             if ((vib_count == 0 && progress >= VIBRATE_FIRST) || (vib_count ==  1 && progress >= VIBRATE_SECOND))
             {
                 vib_count++;
+#if UNITY_ANDROID
                 Handheld.Vibrate();
+#endif
             }
         }
         else

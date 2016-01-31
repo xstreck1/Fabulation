@@ -15,9 +15,11 @@ public static class GameData
     static public List<string> names = new List<string>();
     static int _step_no; // Incremented with each scene change
     static readonly int PHASE_COUNT = 3; // Three phases per player
+    static string winner = "";
     
     static public Words words;
     static public List<UsedWord> history;
+    static public string title;
 
     static public int PlayerNo { get { return (_step_no / PHASE_COUNT) % Settings.players; } }
     static public int RoundNo { get { return _step_no / (PHASE_COUNT * Settings.players); } }
@@ -28,8 +30,9 @@ public static class GameData
     {
         Reset();
         // Create dummy data
-        history = Enumerable.Repeat(new UsedWord { text = "Dummy Text" }, Settings.players).ToList();
+        history = Enumerable.Repeat(new UsedWord { text = "Dummy Text." }, Settings.players).ToList();
         names = Enumerable.Repeat("Dummy Player", Settings.players).ToList();
+        title = "The Dummy Story";
         if (Application.loadedLevelName == "Speaker")
         {
             _step_no = 1;
@@ -43,6 +46,7 @@ public static class GameData
     static public void Reset()
     {
         _step_no = 0;
+        winner = "";
         score = Enumerable.Repeat(0, Settings.players).ToList();
         names = Enumerable.Repeat("", Settings.players).ToList();
         words = new Words();
@@ -89,5 +93,23 @@ public static class GameData
             text += word.text;
         }
         return text.Replace("\n", " ");
+    }
+    
+    public static string getWinner()
+    {
+        if (winner == "")
+        {
+            List<string> winners = new List<string>();
+            int max_score = GameData.score.Max();
+            for (int i = 0; i < Settings.players; i++)
+            {
+                if (GameData.score[i] == max_score)
+                {
+                    winners.Add(GameData.names[i]);
+                }
+            }
+            winner = winners.ElementAt(UnityEngine.Random.Range(0, winners.Count()));
+        }
+        return winner;
     }
 }

@@ -15,7 +15,7 @@ public class Speaker : MonoBehaviour
     public GameObject _confirmPanel;
 
 
-    const string intro_text = Settings.LANGUAGE == "CZ" ? "Pribeh o tom jak \n" : "The Story How a \n";
+    const string intro_text = Settings.LANGUAGE == "CZ" ? "Pribeh o {0}" : "The {0} Story";
     const string conclusion_text = Settings.LANGUAGE == "CZ" ? ", ... Konec." : ", ... The End.";
 
 #if UNITY_EDITOR
@@ -58,26 +58,35 @@ public class Speaker : MonoBehaviour
    
     void SetText()
     {
+        string text_to_save = "";
         if (GameData.FirstPlayer) // First word
         {
-            _newWord.GetComponent<Text>().text = intro_text + GameData.words.GetWord(true) + "...";
+            string word = GameData.words.GetWord(true);
+            text_to_save = "..." + word + "...";
+            _newWord.GetComponent<Text>().text = String.Format(intro_text, word ) + "\n" + text_to_save;
         }
         else if (GameData.LastPlayer)
         { // Last round, last player.
-            _newWord.GetComponent<Text>().text = conclusion_text;
+            text_to_save = conclusion_text;
+           _newWord.GetComponent<Text>().text = text_to_save;
+
         }
         else
         {
             if (Settings.simple)
             {
-                _newWord.GetComponent<Text>().text = ", ..." + GameData.words.GetWord(true) + "...";
+                text_to_save = ", ..." + GameData.words.GetWord(true) + "...";
+                _newWord.GetComponent<Text>().text = text_to_save;
             }
             else
             {
-                _newWord.GetComponent<Text>().text = ", " + GameData.words.GetConnective() + "...\n" + GameData.words.GetWord(true) + "...";
+                text_to_save = ", " + GameData.words.GetConnective() + "...\n" + GameData.words.GetWord(true) + "...";
+                _newWord.GetComponent<Text>().text = text_to_save;
             }
         }
-        _usedWords.GetComponent<Text>().text = GameData.GetStoryText();
+        _usedWords.GetComponent<Text>().text = GameData.title + "\n" + GameData.GetStoryText();
+
+        GameData.history.Add(new UsedWord() { round = GameData.RoundNo, player = GameData.PlayerNo, text = text_to_save });
     }
 
 
@@ -96,7 +105,6 @@ public class Speaker : MonoBehaviour
     {
         if (Settings.Seconds - Timer > BUTTON_BLOCK)
         {
-            GameData.history.Add(new UsedWord() { round = GameData.RoundNo, player = GameData.PlayerNo, text = _newWord.GetComponent<Text>().text });
             GameData.Next();
         }
     }

@@ -6,12 +6,14 @@ using System.Linq;
 
 public class Score : MonoBehaviour {
     ScrollRect _scroll_rect;
+    Text _story_title;
     Text _author_name;
     Text _story_text;
 
     public void Start ()
     {
-        _author_name = transform.FindChild("Author").FindChild("Author Text").GetComponent<Text>();
+        _story_title = transform.FindChild("Title").FindChild("Title Text").GetComponent<Text>();
+        _author_name = transform.FindChild("Title").FindChild("Title Text").GetComponent<Text>();
         _story_text = transform.FindChild("Story").FindChild("Story Text").GetComponent<Text>();
         _scroll_rect = transform.FindChild("Story").GetComponent<ScrollRect>();
         SetResults();
@@ -27,19 +29,10 @@ public class Score : MonoBehaviour {
 
     public void SetResults()
     {
-        List<string> winners = new List<string>();
-        int max_score = GameData.score.Max();
-        for (int i = 0; i < Settings.players; i++)
-        {
-            if (GameData.score[i] == max_score)
-            {
-                winners.Add(GameData.names[i]);
-            }
-        }
-        string winner = winners.ElementAt(UnityEngine.Random.Range(0, winners.Count()));
-        _author_name.text = "    " + winner;
-
-        _story_text.text = GameData.GetStoryText();
+        string winner = GameData.getWinner();
+        _story_title.text = GameData.title;
+        _story_text.text = "<size=50>By " + winner + "</size>\n\n" + GameData.GetStoryText();
+        
         _scroll_rect.verticalNormalizedPosition = 1f;
     }
 
