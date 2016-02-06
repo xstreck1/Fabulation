@@ -25,6 +25,7 @@ public static class GameData
     static public int RoundNo { get { return _step_no / (PHASE_COUNT * Settings.players); } }
     static public bool FirstPlayer { get { return _step_no / PHASE_COUNT == 0; } }
     static public bool LastPlayer { get { return RoundNo + 1 >= Settings.rounds && PlayerNo == Settings.players - 1; } }
+    static public bool GameEnded { get { return _step_no >= PHASE_COUNT * Settings.players * Settings.rounds; } }
 
     static GameData()
     {
@@ -64,6 +65,10 @@ public static class GameData
                 {
                     Application.LoadLevel("Names");
                 }
+                else if (GameEnded)
+                {
+                    Application.LoadLevel("Score");
+                } 
                 else
                 {
                     Application.LoadLevel("Judge");
@@ -73,14 +78,7 @@ public static class GameData
                 Application.LoadLevel("Speaker");
                 break;
             case 2:
-                if (LastPlayer)
-                {
-                    Application.LoadLevel("Score");
-                }
-                else
-                {
-                    Application.LoadLevel("NextPlayer");
-                }
+                Application.LoadLevel("NextPlayer");
                 break;
         }
     }

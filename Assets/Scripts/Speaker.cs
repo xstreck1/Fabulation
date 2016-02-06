@@ -15,7 +15,7 @@ public class Speaker : MonoBehaviour
     public GameObject _confirmPanel;
 
 
-    const string intro_text = Settings.LANGUAGE == "CZ" ? "Pribeh o {0}" : "The {0} Story";
+    const string intro_text = Settings.LANGUAGE == "CZ" ? "Pribeh o {0}" : "Story of {0}";
     const string conclusion_text = Settings.LANGUAGE == "CZ" ? ", ... Konec." : ", ... The End.";
 
 #if UNITY_EDITOR
@@ -61,9 +61,10 @@ public class Speaker : MonoBehaviour
         string text_to_save = "";
         if (GameData.FirstPlayer) // First word
         {
-            string word = GameData.words.GetWord(true);
-            text_to_save = "..." + word + "...";
-            _newWord.GetComponent<Text>().text = String.Format(intro_text, word ) + "\n" + text_to_save;
+            string story_name = GameData.words.GetWord(true);
+            text_to_save = "..." + story_name + "...";
+            GameData.title = String.Format(intro_text, story_name);
+            _newWord.GetComponent<Text>().text = GameData.title  + "\n" + text_to_save;
         }
         else if (GameData.LastPlayer)
         { // Last round, last player.
