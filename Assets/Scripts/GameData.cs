@@ -14,18 +14,18 @@ public static class GameData
     static public List<int> score = new List<int>();
     static public List<string> names = new List<string>();
     static int _step_no; // Incremented with each scene change
-    static readonly int PHASE_COUNT = 3; // Three phases per player
+    static public int PhaseCount { get { return Settings.Scored ? 3 : 2; } } // Three phases per player
     static string winner = "";
-    
+
     static public Words words;
     static public List<UsedWord> history;
     static public string title;
 
-    static public int PlayerNo { get { return (_step_no / PHASE_COUNT) % Settings.players; } }
-    static public int RoundNo { get { return _step_no / (PHASE_COUNT * Settings.players); } }
-    static public bool FirstPlayer { get { return _step_no / PHASE_COUNT == 0; } }
+    static public int PlayerNo { get { return (_step_no / PhaseCount) % Settings.players; } }
+    static public int RoundNo { get { return _step_no / (PhaseCount * Settings.players); } }
+    static public bool FirstPlayer { get { return _step_no / PhaseCount == 0; } }
     static public bool LastPlayer { get { return RoundNo + 1 >= Settings.rounds && PlayerNo == Settings.players - 1; } }
-    static public bool GameEnded { get { return _step_no >= PHASE_COUNT * Settings.players * Settings.rounds; } }
+    static public bool GameEnded { get { return _step_no >= PhaseCount * Settings.players * Settings.rounds; } }
 
     static GameData()
     {
@@ -36,11 +36,11 @@ public static class GameData
         title = "The Dummy Story";
         if (Application.loadedLevelName == "Speaker")
         {
-            _step_no = 1;
+            _step_no = PhaseCount - 2;
         }
         else if (Application.loadedLevelName == "NextPlayer")
         {
-            _step_no = 2;
+            _step_no = PhaseCount - 3;
         }
     }
 
@@ -58,28 +58,49 @@ public static class GameData
     {
         _step_no++;
 
-        switch (_step_no % 3)
+        if (PhaseCount == 3)
         {
-            case 0:
-                if (RoundNo == 0)
-                {
-                    Application.LoadLevel("Names");
-                }
-                else if (GameEnded)
-                {
-                    Application.LoadLevel("Score");
-                } 
-                else
-                {
-                    Application.LoadLevel("Judge");
-                }
-                break;
-            case 1:
-                Application.LoadLevel("Speaker");
-                break;
-            case 2:
-                Application.LoadLevel("NextPlayer");
-                break;
+            switch (_step_no % PhaseCount)
+            {
+                case 0:
+                    if (RoundNo == 0)
+                    {
+                        Application.LoadLevel("Names");
+                    }
+                    else if (GameEnded)
+                    {
+                        Application.LoadLevel("Score");
+                    }
+                    else
+                    {
+                        Application.LoadLevel("Judge");
+                    }
+                    break;
+                case 1:
+                    Application.LoadLevel("Speaker");
+                    break;
+                case 2:
+                    Application.LoadLevel("NextPlayer");
+                    break;
+            }
+        }
+        else {
+            switch (_step_no % PhaseCount)
+            {
+                case 0:
+                    if (GameEnded)
+                    {
+                        Application.LoadLevel("Score");
+                    }
+                    else
+                    {
+                        Application.LoadLevel("Names");
+                    }
+                    break;
+                case 1:
+                    Application.LoadLevel("NextPlayer");
+                    break;
+            }
         }
     }
 
@@ -92,7 +113,7 @@ public static class GameData
         }
         return text.Replace("\n", " ");
     }
-    
+
     public static string getWinner()
     {
         if (winner == "")

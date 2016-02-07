@@ -56,7 +56,7 @@ public class Judge : MonoBehaviour
             }
             GameObject new_judger = Instantiate(prefab) as GameObject;
             new_judger.name = "Judger" + (i);
-            new_judger.GetComponent<RectTransform>().position = new Vector3(0, -100 - 80 * i, 0);
+            // new_judger.GetComponent<RectTransform>().position = new Vector3(0, -100 - 80 * i, 0);
             new_judger.transform.SetParent(transform.FindChild("Judgers"), false);
             new_judger.GetComponent<Toggle>().onValueChanged.AddListener((value) => JudgeClick(value));
             Text juger_text = new_judger.transform.FindChild("Word").FindChild("Text").GetComponent<Text>();

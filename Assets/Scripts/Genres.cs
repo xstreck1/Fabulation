@@ -10,7 +10,7 @@ public class Genres : MonoBehaviour {
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            Application.LoadLevel("Instructions");
+            Application.LoadLevel("Menu");
         }
     }
 

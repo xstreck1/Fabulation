@@ -28,8 +28,10 @@ public static class Settings
     static public Dictionary<string, List<string>> connectives_lists = new Dictionary<string, List<string>>();
     static public List<string> names_list = new List<string>();
     static public Dictionary<string, bool> used_lists = new Dictionary<string, bool>();
-    
-    static public bool simple = true;
+
+    static public bool Tutorial;
+    static public bool Scored;
+    static public bool HardMode;
     static public int players = 3;
     static public int rounds = 3;
     static int seconds = 4;

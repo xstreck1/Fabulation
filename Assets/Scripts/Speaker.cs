@@ -74,14 +74,14 @@ public class Speaker : MonoBehaviour
         }
         else
         {
-            if (Settings.simple)
+            if (Settings.HardMode)
             {
-                text_to_save = ", ..." + GameData.words.GetWord(true) + "...";
+                text_to_save = ", " + GameData.words.GetConnective() + "...\n" + GameData.words.GetWord(true) + "...";
                 _newWord.GetComponent<Text>().text = text_to_save;
             }
             else
             {
-                text_to_save = ", " + GameData.words.GetConnective() + "...\n" + GameData.words.GetWord(true) + "...";
+                text_to_save = ", ..." + GameData.words.GetWord(true) + "...";
                 _newWord.GetComponent<Text>().text = text_to_save;
             }
         }
