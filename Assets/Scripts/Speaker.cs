@@ -12,11 +12,15 @@ public class Speaker : MonoBehaviour
     public GameObject _usedWords;
     public GameObject _textPad;
     public GameObject _pageNumber;
+    public GameObject _storyTitle;
     public GameObject _confirmPanel;
+    public GameObject _suggestionScreen;
+    public GameObject _tutorialScreen;
 
-
-    const string intro_text = Settings.LANGUAGE == "CZ" ? "Pribeh o {0}" : "Story of {0}";
+    const string title_text = Settings.LANGUAGE == "CZ" ? "Pribeh o {0}" : "Story of {0}";
     const string conclusion_text = Settings.LANGUAGE == "CZ" ? ", ... Konec." : ", ... The End.";
+
+    bool TutorialActive { get { return _suggestionScreen.activeSelf || _tutorialScreen.activeSelf;  } }
 
 #if UNITY_EDITOR
     readonly float BUTTON_BLOCK = 0.1f; // A timeout for the button not to be pressed hastily 
@@ -26,11 +30,15 @@ public class Speaker : MonoBehaviour
 
     public float Timer { get; private set; }
 
+    void Awake()
+    {
+        SetText();
+        SetTitle();
+        SetPageNumber();
+    }
+
     void Start()
     {
-        SetPlayerName();
-        SetText();
-        SetPageNumber();
         Timer = Settings.Seconds;
     }
 
@@ -41,9 +49,13 @@ public class Speaker : MonoBehaviour
         {
             return;
         }
-        if (Input.GetKeyDown(KeyCode.Escape))
+         else if (Input.GetKeyDown(KeyCode.Escape))
         {
             _confirmPanel.SetActive(true);
+        }
+        else if (TutorialActive)
+        {
+            return;
         }
 
         // Timing related progress
@@ -58,36 +70,49 @@ public class Speaker : MonoBehaviour
    
     void SetText()
     {
-        string text_to_save = "";
+        string the_text;
         if (GameData.FirstPlayer) // First word
         {
             string story_name = GameData.words.GetWord(true);
-            text_to_save = "..." + story_name + "...";
-            GameData.title = String.Format(intro_text, story_name);
-            _newWord.GetComponent<Text>().text = GameData.title  + "\n" + text_to_save;
+            GameData.title = String.Format(title_text, story_name);
+            if (Settings.HardMode)
+            {
+                the_text = story_name + "...\n" + GameData.words.GetWord(true) + "...";
+                
+            }
+            else
+            {
+                the_text = "..." + story_name + "...";
+            }
         }
-        else if (GameData.LastPlayer)
-        { // Last round, last player.
-            text_to_save = conclusion_text;
-           _newWord.GetComponent<Text>().text = text_to_save;
+        else if (GameData.LastPlayer) // Last round, last player.
+        {
+            if (Settings.HardMode)
+            {
+                the_text = ", " + GameData.words.GetConnective() + "...\n" + conclusion_text;
+            }
+            else
+            {
+                the_text = conclusion_text;
+            }
 
         }
         else
         {
             if (Settings.HardMode)
             {
-                text_to_save = ", " + GameData.words.GetConnective() + "...\n" + GameData.words.GetWord(true) + "...";
-                _newWord.GetComponent<Text>().text = text_to_save;
+                the_text = ", " + GameData.words.GetConnective() + "...\n" + GameData.words.GetWord(true) + "...";
             }
             else
             {
-                text_to_save = ", ..." + GameData.words.GetWord(true) + "...";
-                _newWord.GetComponent<Text>().text = text_to_save;
+                the_text = ", ..." + GameData.words.GetWord(true) + "...";
             }
         }
-        _usedWords.GetComponent<Text>().text = GameData.title + "\n" + GameData.GetStoryText();
 
-        GameData.history.Add(new UsedWord() { round = GameData.RoundNo, player = GameData.PlayerNo, text = text_to_save });
+        _newWord.GetComponent<Text>().text = the_text;
+        _usedWords.GetComponent<Text>().text = GameData.GetStoryText();
+
+        GameData.history.Add(new UsedWord() { round = GameData.RoundNo, player = GameData.PlayerNo, text = the_text });
     }
 
 
@@ -96,10 +121,9 @@ public class Speaker : MonoBehaviour
         _pageNumber.GetComponent<Text>().text = (GameData.RoundNo * Settings.players + GameData.PlayerNo + 1) + "/" + (Settings.players * Settings.rounds);
     }
 
-    void SetPlayerName()
+    void SetTitle()
     {
-        string currentName = GameData.names[GameData.PlayerNo];
-        _instructionsText.GetComponent<Text>().text = GlobalMethods.ReplaceName(_instructionsText.GetComponent<Text>().text, currentName);
+        _storyTitle.GetComponent<Text>().text = GameData.title;
     }
 
     public void Check()

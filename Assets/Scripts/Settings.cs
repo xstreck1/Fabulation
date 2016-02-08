@@ -78,6 +78,7 @@ public static class Settings
     {
         // Keep awake
         Screen.sleepTimeout = SleepTimeout.NeverSleep;
+        Tutorial = true;
 
         // Load the dictionaries
         string[] used_genres = { "adventure", "crimi", "drama", "fantasy", "fairytale", "horror", "road story", "sci-fi", "western" };
