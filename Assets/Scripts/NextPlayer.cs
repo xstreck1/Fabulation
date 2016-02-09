@@ -19,7 +19,7 @@ public class NextPlayer : MonoBehaviour {
         _pass_text = GameObject.Find("Text").GetComponent<Text>();
         if (GameData.LastPlayer)
         {
-            if (Settings.Tutorial)
+            if (Settings.Competetive)
             {
                 _timer = PASS_TIME * 3;
                 _pass_text.text = "the credit for the story goes to";

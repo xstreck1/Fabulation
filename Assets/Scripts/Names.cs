@@ -17,7 +17,7 @@ public class Names : MonoBehaviour
 
     UnityEngine.Object _name_prefab;
 
-    readonly int MAX_LENGTH = 10;
+    readonly int MAX_LENGTH = 20;
 
     Regex name_regex = new Regex("^[a-zA-Z0-9 ]*$");
 
@@ -83,7 +83,8 @@ public class Names : MonoBehaviour
         if (PlayerPrefs.HasKey(Settings._names_key))
         {
             // Add if does not exists yet
-            if (PlayerPrefs.GetString(Settings._names_key).Split(':').Count(p => p == new_name) == 0)
+            string[] new_names = PlayerPrefs.GetString(Settings._names_key).Split(':');
+            if (new_names.Count(p => p == new_name) == 0 && Settings.names_list.Count(p => p == new_name) == 0)
             {
                 PlayerPrefs.SetString(Settings._names_key, PlayerPrefs.GetString(Settings._names_key) + ":" + _inputField.text);
             }
@@ -93,8 +94,6 @@ public class Names : MonoBehaviour
             PlayerPrefs.SetString(Settings._names_key, _inputField.text);
         }
         PlayerPrefs.Save();
-        GameData.names[GameData.PlayerNo] = _inputField.text;
-        GameData.Next();
 
         GameData.names[GameData.PlayerNo] = new_name;
         GameData.Next();

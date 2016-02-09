@@ -14,12 +14,12 @@ public class MenuToggle : MonoBehaviour
         transform.FindChild("Label").GetComponent<Text>().text = this.name;
         _toggle = GetComponent<Toggle>();
         _toggle.isOn = Convert.ToBoolean(PlayerPrefs.GetInt(_toggle.name, Convert.ToInt32(_toggle.isOn)));
-        SetDictionary(_toggle.isOn);
-        _toggle.onValueChanged.AddListener(SetDictionary);
+        SetSetting(_toggle.isOn);
+        _toggle.onValueChanged.AddListener(SetSetting);
     }
 
-    // Add or remove the dictionary from the list in static data
-    public void SetDictionary(bool value)
+    // 
+    public void SetSetting(bool value)
     {
         if (this.name == "Tutorial")
         {
@@ -27,7 +27,7 @@ public class MenuToggle : MonoBehaviour
         }
         else if (this.name == "Competetive")
         {
-            Settings.Scored = value;
+            Settings.Competetive = value;
         }
         else if (this.name == "Advanced")
         {

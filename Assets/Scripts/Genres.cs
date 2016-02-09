@@ -19,7 +19,14 @@ public class Genres : MonoBehaviour {
         if (Settings.used_lists.Count(x => x.Value == true) > 0)
         {
             GameData.Reset();
-            Application.LoadLevel("Names");
+            if (Settings.Competetive)
+            {
+                Application.LoadLevel("Names");
+            }
+            else
+            {
+                Application.LoadLevel("Speaker");
+            }
         }
         else
         {

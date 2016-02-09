@@ -31,7 +31,14 @@ public class Score : MonoBehaviour {
     {
         string winner = GameData.getWinner();
         _story_title.text = GameData.title;
-        _story_text.text = "<size=50>By " + winner + "</size>\n\n" + GameData.GetStoryText();
+        if (Settings.Competetive)
+        {
+            _story_text.text = "<size=50>By " + winner + "</size>\n\n" + GameData.GetStoryText();
+        }
+        else
+        {
+            _story_text.text = GameData.GetStoryText();
+        }
         
         _scroll_rect.verticalNormalizedPosition = 1f;
     }

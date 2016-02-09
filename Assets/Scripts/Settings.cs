@@ -30,7 +30,7 @@ public static class Settings
     static public Dictionary<string, bool> used_lists = new Dictionary<string, bool>();
 
     static public bool Tutorial;
-    static public bool Scored;
+    static public bool Competetive;
     static public bool HardMode;
     static public int players = 3;
     static public int rounds = 3;
