@@ -31,7 +31,7 @@ public class Score : MonoBehaviour {
     {
         string winner = GameData.getWinner();
         _story_title.text = GameData.title;
-        if (Settings.Competetive)
+        if (Settings.IsCompetitive)
         {
             _story_text.text = "<size=50>By " + winner + "</size>\n\n" + GameData.GetStoryText();
         }

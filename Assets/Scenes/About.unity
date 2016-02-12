@@ -270,7 +270,7 @@ MonoBehaviour:
     by Manfred Klein\nRasputine by Dimitri Castrique\nEternal Call by Maelle.K | Thomas
     Boucherie\n\n<b>ADDITIONAL THANKS</b>\nTereza D\u011Bdov\xE1, Tom\xE1\u0161 H\u016Fsek,
     Lorenzo Pilia, John Gottschalk, Adriaan de Jongh, \rLuca Lombardo, Jan \u0160pl\xEDchal,
-    Dennis Lrnz\nand the many many testers of this game"
+    Dennis Lrnz, Tobias Wehrum\nand the many many testers of this game"
 --- !u!222 &639294705
 CanvasRenderer:
   m_ObjectHideFlags: 0

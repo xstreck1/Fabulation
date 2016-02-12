@@ -14,7 +14,7 @@ public static class GameData
     static public List<int> score = new List<int>();
     static public List<string> names = new List<string>();
     static int _step_no; // Incremented with each scene change
-    static public int PhaseCount { get { return Settings.Competetive ? 3 : 2; } } // Three phases per player
+    static public int PhaseCount { get { return Settings.IsCompetitive ? 3 : 2; } } // Three phases per player
     static string winner = "";
 
     static public Words words;

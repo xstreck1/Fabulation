@@ -25,7 +25,7 @@ public class MenuToggle : MonoBehaviour
         {
             Settings.Tutorial = value;
         }
-        else if (this.name == "Competetive")
+        else if (this.name == "Competitive")
         {
             Settings.Competetive = value;
         }
@@ -34,7 +34,6 @@ public class MenuToggle : MonoBehaviour
             Settings.HardMode = value;
         }
 
-        Settings.used_lists[_toggle.name] = value;
-        PlayerPrefs.SetInt(_toggle.name, Convert.ToInt32(Settings.used_lists[_toggle.name]));
+        PlayerPrefs.SetInt(_toggle.name, Convert.ToInt32(_toggle.isOn));
     }
 }

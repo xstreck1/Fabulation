@@ -9,6 +9,6 @@ public class ConfirmPanel : MonoBehaviour {
 
     public void Yes()
     {
-        Application.LoadLevel("Genres");
+        Application.LoadLevel("Menu");
     }
 }

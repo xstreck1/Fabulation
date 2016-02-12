@@ -31,6 +31,7 @@ public static class Settings
 
     static public bool Tutorial;
     static public bool Competetive;
+    static public bool IsCompetitive {  get { return Competetive && players > 2;  } }
     static public bool HardMode;
     static public int players = 3;
     static public int rounds = 3;

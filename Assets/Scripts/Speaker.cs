@@ -14,13 +14,10 @@ public class Speaker : MonoBehaviour
     public GameObject _pageNumber;
     public GameObject _storyTitle;
     public GameObject _confirmPanel;
-    public GameObject _suggestionScreen;
-    public GameObject _tutorialScreen;
+    public GameObject _speakerTutorials;
 
     const string title_text = Settings.LANGUAGE == "CZ" ? "Pribeh o {0}" : "Story of {0}";
     const string conclusion_text = Settings.LANGUAGE == "CZ" ? ", ... Konec." : ", ... The End.";
-
-    bool TutorialActive { get { return _suggestionScreen.activeSelf || _tutorialScreen.activeSelf;  } }
 
 #if UNITY_EDITOR
     readonly float BUTTON_BLOCK = 0.1f; // A timeout for the button not to be pressed hastily 
@@ -53,7 +50,7 @@ public class Speaker : MonoBehaviour
         {
             _confirmPanel.SetActive(true);
         }
-        else if (TutorialActive)
+        else if (_speakerTutorials.GetComponent<SpeakerTutorials>().TutorialActive())
         {
             return;
         }

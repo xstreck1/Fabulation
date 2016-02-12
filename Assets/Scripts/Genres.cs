@@ -1,10 +1,16 @@
 ﻿using UnityEngine;
 using System.Linq;
 
-public class Genres : MonoBehaviour {
-	void Start ()
+public class Genres : MonoBehaviour
+{
+    bool HasGenre { get { return Settings.used_lists.Count(x => x.Value == true) > 0; } }
+
+    public GameObject _button;
+    public GameObject _requirement;
+
+    void Start()
     {
-	}
+    }
 
     public void Update()
     {
@@ -12,14 +18,17 @@ public class Genres : MonoBehaviour {
         {
             Application.LoadLevel("Menu");
         }
+
+        _button.SetActive(HasGenre);
+        _requirement.SetActive(!HasGenre);
     }
 
     void StartGame()
     {
-        if (Settings.used_lists.Count(x => x.Value == true) > 0)
+        if (HasGenre)
         {
             GameData.Reset();
-            if (Settings.Competetive)
+            if (Settings.IsCompetitive)
             {
                 Application.LoadLevel("Names");
             }
