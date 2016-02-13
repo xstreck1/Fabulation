@@ -21,7 +21,7 @@ public class Timer : MonoBehaviour {
 	void Update () {
         if (_speaker.Timer > 0)
         {
-            float progress = (Settings.Seconds - _speaker.Timer) / Settings.Seconds;
+            float progress = (Settings.SecondsCount - _speaker.Timer) / Settings.SecondsCount;
 
             transform.localScale = new Vector3(progress, 1f, 1f);
             _image.color = new Color(progress / 2, 0f, 0f, 0.75f);

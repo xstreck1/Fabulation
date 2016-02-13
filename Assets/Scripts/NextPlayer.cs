@@ -14,12 +14,11 @@ public class NextPlayer : MonoBehaviour {
     float _timer;
     
     void Start ()
-    {
-        
+    {   
         _pass_text = GameObject.Find("Text").GetComponent<Text>();
         if (GameData.LastPlayer)
         {
-            if (Settings.Competetive)
+            if (Settings.IsCompetitive)
             {
                 _timer = PASS_TIME * 3;
                 _pass_text.text = "the credit for the story goes to";

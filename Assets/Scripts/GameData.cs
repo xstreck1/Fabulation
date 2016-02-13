@@ -21,18 +21,20 @@ public static class GameData
     static public List<UsedWord> history;
     static public string title;
 
-    static public int PlayerNo { get { return (_step_no / PhaseCount) % Settings.players; } }
-    static public int RoundNo { get { return _step_no / (PhaseCount * Settings.players); } }
+    static public int PlayerNo { get { return (_step_no / PhaseCount) % Settings.PlayerCount; } }
+    static public int RoundNo { get { return _step_no / (PhaseCount * Settings.PlayerCount); } }
     static public bool FirstPlayer { get { return _step_no / PhaseCount == 0; } }
-    static public bool LastPlayer { get { return RoundNo + 1 >= Settings.rounds && PlayerNo == Settings.players - 1; } }
-    static public bool GameEnded { get { return _step_no >= PhaseCount * Settings.players * Settings.rounds; } }
+    static public bool LastPlayer { get { return RoundNo + 1 >= Settings.RoundCount && PlayerNo == Settings.PlayerCount - 1; } }
+    static public bool GameEnded { get { return _step_no >= PhaseCount * Settings.PlayerCount * Settings.RoundCount; } }
+
+    static public bool HasNames { get; set; }
 
     static GameData()
     {
         Reset();
         // Create dummy data
-        history = Enumerable.Repeat(new UsedWord { text = "Dummy Text." }, Settings.players).ToList();
-        names = Enumerable.Repeat("Dummy Player", Settings.players).ToList();
+        history = Enumerable.Repeat(new UsedWord { text = "Dummy Text." }, Settings.PlayerCount).ToList();
+        names = Enumerable.Repeat("Dummy Player", Settings.PlayerCount).ToList();
         title = "The Dummy Story";
         if (Application.loadedLevelName == "Speaker")
         {
@@ -46,12 +48,14 @@ public static class GameData
 
     static public void Reset()
     {
-        _step_no = 0;
+        if (Settings.IsCompetitive)
+            _step_no = 0;
         winner = "";
-        score = Enumerable.Repeat(0, Settings.players).ToList();
-        names = Enumerable.Repeat("", Settings.players).ToList();
+        score = Enumerable.Repeat(0, Settings.PlayerCount).ToList();
+        names = Enumerable.Repeat("", Settings.PlayerCount).ToList();
         words = new Words();
         history = new List<UsedWord>();
+        HasNames = false;
     }
 
     static public void Next()
@@ -65,7 +69,21 @@ public static class GameData
                 case 0:
                     if (RoundNo == 0)
                     {
-                        Application.LoadLevel("Names");
+                        if (!GameData.HasNames)
+                        {
+                            Application.LoadLevel("Names");
+                        }
+                        else
+                        {
+                            _step_no++;
+                            Application.LoadLevel("Speaker");
+                        }
+                    }
+                    else if (!GameData.HasNames)
+                    {
+                        GameData.HasNames = true;
+                        _step_no = 1;
+                        Application.LoadLevel("Speaker");
                     }
                     else if (GameEnded)
                     {
@@ -77,7 +95,15 @@ public static class GameData
                     }
                     break;
                 case 1:
-                    Application.LoadLevel("Speaker");
+                    if (RoundNo == 0)
+                    {
+ 
+                        _step_no ++;
+                        Application.LoadLevel("NextPlayer");
+                    }
+                    else {
+                        Application.LoadLevel("Speaker");
+                    }
                     break;
                 case 2:
                     Application.LoadLevel("NextPlayer");
@@ -120,7 +146,7 @@ public static class GameData
         {
             List<string> winners = new List<string>();
             int max_score = GameData.score.Max();
-            for (int i = 0; i < Settings.players; i++)
+            for (int i = 0; i < Settings.PlayerCount; i++)
             {
                 if (GameData.score[i] == max_score)
                 {

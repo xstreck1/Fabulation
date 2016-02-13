@@ -28,18 +28,18 @@ public class MenuSlider : MonoBehaviour {
         int value = (int)_slider.value;
         if (this.name == "PlayersCount")
         {
-            Settings.players = (int)value;
-            _label_text.text = _init_text + ": " + Settings.players;
+            Settings.PlayerCount = (int)value;
+            _label_text.text = _init_text + ": " + Settings.PlayerCount;
         }
         else if (this.name == "RoundsCount")
         {
-            Settings.rounds = (int)value;
-            _label_text.text = _init_text + ": " + Settings.rounds;
+            Settings.RoundCount = (int)value;
+            _label_text.text = _init_text + ": " + Settings.RoundCount;
         }
         else if (this.name == "TimeCount")
         {
-            Settings.Seconds = (int)value;
-            _label_text.text = _init_text + ": " + Settings.Seconds;
+            Settings.SecondsCount = (int)value;
+            _label_text.text = _init_text + ": " + Settings.SecondsCount;
         }
         else
         {

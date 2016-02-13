@@ -47,7 +47,7 @@ public class Judge : MonoBehaviour
     void CreateJudgeButtons()
     {
         var prefab = Resources.Load("Judger");
-        foreach (int i in Enumerable.Range(0, Settings.players - 1))
+        foreach (int i in Enumerable.Range(0, Settings.PlayerCount - 1))
         {
             if (i > 9)
             {
@@ -61,7 +61,7 @@ public class Judge : MonoBehaviour
             new_judger.GetComponent<Toggle>().onValueChanged.AddListener((value) => JudgeClick(value));
             Text juger_text = new_judger.transform.FindChild("Word").FindChild("Text").GetComponent<Text>();
             // order the last (Settings.players - 1) words such that the one used the lates is on the bottom
-            juger_text.text = GameData.history[GameData.history.Count - Settings.players + i + 1].text;
+            juger_text.text = GameData.history[GameData.history.Count - Settings.PlayerCount + i + 1].text;
             _judgers.Add(new_judger);
         }
 
@@ -106,7 +106,7 @@ public class Judge : MonoBehaviour
         for (int i = 0; i < _judgers.Count; i++)
         {
             // The player that spoke the earliest is the successor of the curent player
-            int affected_player = (GameData.PlayerNo + i + 1) % Settings.players;
+            int affected_player = (GameData.PlayerNo + i + 1) % Settings.PlayerCount;
 
             Toggle toggle = _judgers[i].GetComponent<Toggle>();
             if (toggle.isOn)

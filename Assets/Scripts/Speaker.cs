@@ -36,7 +36,7 @@ public class Speaker : MonoBehaviour
 
     void Start()
     {
-        Timer = Settings.Seconds;
+        Timer = Settings.SecondsCount;
     }
 
 
@@ -115,7 +115,7 @@ public class Speaker : MonoBehaviour
 
     void SetPageNumber()
     {
-        _pageNumber.GetComponent<Text>().text = (GameData.RoundNo * Settings.players + GameData.PlayerNo + 1) + "/" + (Settings.players * Settings.rounds);
+        _pageNumber.GetComponent<Text>().text = (GameData.RoundNo * Settings.PlayerCount + GameData.PlayerNo + 1) + "/" + (Settings.PlayerCount * Settings.RoundCount);
     }
 
     void SetTitle()
@@ -125,7 +125,7 @@ public class Speaker : MonoBehaviour
 
     public void Check()
     {
-        if (Settings.Seconds - Timer > BUTTON_BLOCK)
+        if (Settings.SecondsCount - Timer > BUTTON_BLOCK)
         {
             GameData.Next();
         }

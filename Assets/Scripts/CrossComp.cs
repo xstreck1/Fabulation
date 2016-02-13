@@ -13,6 +13,6 @@ public class CrossComp : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        _crossImage.enabled = Settings.players == 2;
+        _crossImage.enabled = Settings.PlayerCount == 2;
 	}
 }

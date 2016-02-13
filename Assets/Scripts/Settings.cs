@@ -31,15 +31,15 @@ public static class Settings
 
     static public bool Tutorial;
     static public bool Competetive;
-    static public bool IsCompetitive {  get { return Competetive && players > 2;  } }
+    static public bool IsCompetitive {  get { return Competetive && PlayerCount > 2;  } }
     static public bool HardMode;
-    static public int players = 3;
-    static public int rounds = 3;
-    static int seconds = 4;
-    public static int Seconds {
+    static public int PlayerCount = 3;
+    static public int RoundCount = 3;
+    static int _secondsCount = 4;
+    public static int SecondsCount {
         get
         {
-            switch (seconds) {
+            switch (_secondsCount) {
                 case 1:
                     return 5;
                 case 2:
@@ -64,14 +64,14 @@ public static class Settings
         }
         set
         {
-            { seconds = value; }
+            { _secondsCount = value; }
         }
     }
 
     public static int VotesAvailable {
         get
         {
-            return players / 2;
+            return PlayerCount / 2;
         }
     }
 
