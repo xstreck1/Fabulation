@@ -19,7 +19,7 @@ public class Words {
         }
         if ((from word in _word_list where char.IsUpper(word[0]) select word).Count() == 0)
         {
-            throw new System.ArgumentException("No nouns for the current game.");
+            Debug.LogError("No nouns for the current game.");
         }
         _names.InsertRange(0, Settings.names_list);
     }

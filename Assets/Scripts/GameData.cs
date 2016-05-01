@@ -48,8 +48,7 @@ public static class GameData
 
     static public void Reset()
     {
-        if (Settings.IsCompetitive)
-            _step_no = 0;
+        _step_no = 0;
         winner = "";
         score = Enumerable.Repeat(0, Settings.PlayerCount).ToList();
         names = Enumerable.Repeat("", Settings.PlayerCount).ToList();

@@ -1,4 +1,39 @@
 Boyfriend
 Girlfriend
-Gift
 Love
+Mistress
+Miss
+Lover
+Date
+Dinner
+Dream
+Bath
+Rose
+Flower
+Partner
+Wife
+Husband
+Present
+Surprise
+Bed
+Sleep
+Connection
+Red
+Heart
+Secret
+Letter
+Memory
+Wedding
+Admirer
+Kiss
+Ring
+Wine
+# verbs
+to love
+to kiss
+to dream
+to ask
+to invite
+to give
+# adverbs
+lonely

@@ -458,21 +458,19 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22443382, guid: 0567af2ae21cffb4abb57a900208efe0, type: 2}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 86.00224
       objectReference: {fileID: 0}
     - target: {fileID: 22453674, guid: 0567af2ae21cffb4abb57a900208efe0, type: 2}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 43.00112
       objectReference: {fileID: 0}
     - target: {fileID: 11419690, guid: 0567af2ae21cffb4abb57a900208efe0, type: 2}
       propertyPath: m_Text
-      value: Check the stories from the last round you liked the best to give them
-        a point.
+      value: Pick the best stories from the last round.
       objectReference: {fileID: 0}
     - target: {fileID: 11491248, guid: 0567af2ae21cffb4abb57a900208efe0, type: 2}
       propertyPath: m_Text
-      value: Check the stories from the last round you liked the best to give them
-        a point.
+      value: Pick the best stories from the last round.
       objectReference: {fileID: 0}
     - target: {fileID: 11460036, guid: 0567af2ae21cffb4abb57a900208efe0, type: 2}
       propertyPath: m_Sprite

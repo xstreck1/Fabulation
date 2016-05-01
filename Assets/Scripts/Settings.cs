@@ -82,7 +82,7 @@ public static class Settings
         Tutorial = true;
 
         // Load the dictionaries
-        string[] used_genres = { "adventure", "crimi", "drama", "fantasy", "fairytale", "horror", "road story", "sci-fi", "western" };
+        string[] used_genres = { "adventure", "crimi", "drama", "fantasy", "fairytale", "horror", "road story", "romance", "sci-fi", "western" };
         foreach (string genre_name in used_genres)
         {
             used_lists.Add(genre_name, true);
